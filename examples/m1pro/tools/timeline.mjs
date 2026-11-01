@@ -26,7 +26,7 @@ const res = await esbuild.build({
   logLevel: 'error',
   plugins: [
     {name: 'kit', setup(b) {
-      b.onResolve({filter: /^teardown-kit\//}, (a) => ({path: path.join(ROOT, 'engine/sims/kit', a.path.slice(13))}));
+      b.onResolve({filter: /^rig\//}, (a) => ({path: path.join(ROOT, 'engine/web', a.path.slice(4))}));
     }},
     // film.js imports console.js, which touches the DOM only when called; stub the browser-only kit runtime
     {name: 'stub', setup(b) {

@@ -8,7 +8,7 @@ import * as THREE from 'three';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {BATTERY, BOARD, DETENTS, PADDLES, SIDE_POCKET, SWITCH, WALL, WHEEL} from './dims.js';
 import {chartBoxSide, chartBoxTop, crestAt, footAt, halfWidth, holeField, makeSurface, meshSkin, rasterHole, SKELETON_HOLES} from './skin.js';
-import {rng} from 'teardown-kit/util.js';
+import {rng} from 'rig/rng.js';
 
 const V3 = THREE.Vector3;
 // board map (x forward from the board's rear edge, y toward the mouse's right) → three.js (X forward, Z right)

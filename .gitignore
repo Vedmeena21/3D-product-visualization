@@ -1,5 +1,5 @@
 node_modules/
-teardown-out/
+out/
 __pycache__/
 *.pyc
 .venv/

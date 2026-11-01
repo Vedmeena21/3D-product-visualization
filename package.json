@@ -6,9 +6,9 @@
   "license": "MIT",
   "scripts": {
     "setup": "cd engine && npm install && npx playwright install chromium",
-    "build": "node engine/sims/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-film",
+    "build": "node engine/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-film",
     "timeline": "node examples/m1pro/tools/timeline.mjs",
-    "score": "python3 engine/run_sfx.py examples/m1pro/m1pro-shared/score.py",
-    "film": "node engine/sims/capture.mjs m1pro-film --size 1600x900 --dpr 1.2 --out teardown-out/m1pro-silent.mp4"
+    "score": "python3 engine/audio/run.py examples/m1pro/m1pro-shared/score.py",
+    "film": "node engine/capture.mjs m1pro-film --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4"
   }
 }

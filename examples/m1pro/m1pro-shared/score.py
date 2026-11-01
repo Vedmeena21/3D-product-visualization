@@ -7,19 +7,20 @@ around it; at full speed each closing is a sharp tick over a body thud, each ope
 button. A tiny tick per wheel detent, a UI click on every button the operator presses, the layers lifting apart and
 landing, and a last chord under the card.
 
-    .venv/bin/python engine/run_sfx.py examples/m1pro/m1pro-shared/score.py
+    python3 engine/audio/run.py examples/m1pro/m1pro-shared/score.py
 
 Every time comes from m1pro-film/timeline.json, which examples/m1pro/tools/timeline.mjs samples from film.js and model.js.
 """
 
-import math
 import os
 
-from sfx.score_kit import airy, bed, chords, hiss, hz, thud
-from sfx.synth import SR, blip, chime, click, impact, riser, whoosh
+import numpy as np
+
+from audio.music import bed, chords
+from audio.synth import SR, airy, blip, chime, click, hiss, hz, impact, riser, thud, whoosh
 
 TIMELINE = "../m1pro-film/timeline.json"
-OUT = os.path.join(os.environ.get("TEARDOWN_OUT", "teardown-out"), "m1pro-score.wav")
+OUT = os.path.join(os.environ.get("PV_OUT", "out"), "m1pro-score.wav")
 TARGET_LUFS = -14.0
 SEED = 1600
 
@@ -35,17 +36,10 @@ def ramp(t, a, b):
 
 def snap_slow(dur=0.9):
     """The switch closing, heard at a twentieth of its speed: a low knock with a long ring, a slow scrape into it."""
-    n = int(dur * SR)
-    out = []
-    ph = 0.0
-    for k in range(n):
-        tt = k / SR
-        f = 260 + 520 * math.exp(-tt / 0.05)
-        ph += 2 * math.pi * f / SR
-        s = math.sin(ph) * math.exp(-tt / 0.22) * 0.9
-        s += math.sin(2 * math.pi * 1310 * tt) * math.exp(-tt / 0.09) * 0.35
-        out.append(math.tanh(1.4 * s))
-    return out
+    tt = np.arange(int(dur * SR)) / SR
+    ph = 2 * np.pi * np.cumsum(260 + 520 * np.exp(-tt / 0.05)) / SR
+    s = np.sin(ph) * np.exp(-tt / 0.22) * 0.9 + np.sin(2 * np.pi * 1310 * tt) * np.exp(-tt / 0.09) * 0.35
+    return np.tanh(1.4 * s)
 
 
 def score(mix, tl):
@@ -64,10 +58,11 @@ def score(mix, tl):
             g *= 1 - 0.7 * ramp(t, a, a + 0.35) * (1 - ramp(t, b, b + 0.6))
         return g
 
-    env = [gain(i / SR) for i in range(len(left))]
-    mix.put_stereo(0, [x * g for x, g in zip(left, env)], [x * g for x, g in zip(right, env)], 0.11)
-    mix.put(0, [x * g for x, g in zip(low, env)], 0.11)
-    mix.put(0, [x * g for x, g in zip(drums, env)], 0.04)
+    grid = np.arange(0, dur + 0.01, 0.01)
+    env = np.interp(np.arange(len(left)) / SR, grid, [gain(t) for t in grid])
+    mix.put_stereo(0, left * env, right * env, 0.11)
+    mix.put(0, low * env, 0.11)
+    mix.put(0, drums * env, 0.04)
 
     # the hook opens on a low hit under its first flick
     mix.put(tl["flicks"][0]["t"], impact(1.0), 0.06)

@@ -5,7 +5,7 @@
 // blade beside it) and the wheel, turns it over for the slider and the receiver, flicks again on the 4K link,
 // explodes it layer by layer and closes on a card. Each shot changes on a bar of the score (92 bpm). Every pose and
 // number is a pure function of t.
-import {runSim} from 'teardown-kit/runtime.js';
+import {runSim} from 'rig/film.js';
 import {createConsole, DISPLAY, PANELS} from './console.js';
 import {SPEC, SWITCH} from './dims.js';
 import {contactAt, lastEdge, phaseAt, pressAt, SEQ, stateAt, wheelAt} from './model.js';
@@ -73,7 +73,7 @@ export const SCRIPT = [
   {t: B(20) + 1.0, set: {endcard: 1}, dur: 1.0},
 ];
 export const DURATION = B(22);
-export const DEFAULTS = {duration: DURATION, fps: 60, theme: 'light', hud: {enabled: false, title: 'm1pro', subtitle: ''}, director: {enabled: false}, watermark: ''};
+export const DEFAULTS = {duration: DURATION, fps: 60, theme: 'light'};
 const D2R = Math.PI / 180;
 const smoother = (x) => {
   const u = Math.min(1, Math.max(0, x));

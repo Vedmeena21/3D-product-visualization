@@ -3,7 +3,7 @@
 // and DPI buttons change what the reports carry; seven views, five displays, an orbit you drag and a zoom on the
 // wheel. Left alone it plays the film's script as an auto tour with the operator's cursor, looped; a click, drag,
 // wheel or key hands control to the visitor, 25 s of quiet hands it back.
-import {warmComposer} from 'teardown-kit/warm.js';
+import {warmComposer} from 'rig/warm.js';
 import {createConsole, DISPLAY, SEQS, VIEWS} from './console.js';
 import {LINK_KEYS, SPEC} from './dims.js';
 import {camAt, displayAt, DURATION, filmAt, makeConsoleFrame, makeCursor, sceneState, seqAt, viewAt, VIEW_FN} from './film.js';
