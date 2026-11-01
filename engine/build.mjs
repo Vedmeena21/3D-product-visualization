@@ -27,6 +27,7 @@ const face = (family, weight, file, style = 'normal') =>
 const FONTS = [
   ...[400, 600, 700].map((w) => face('JetBrains Mono', w, `@fontsource/jetbrains-mono/files/jetbrains-mono-latin-${w}-normal.woff2`)),
   face('Inter', '100 900', '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2'),
+  face('Source Serif 4', '200 900', '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2'),
 ].join('\n');
 const BASE_CSS = fs.readFileSync(path.join(RIG_DIR, 'base.css'), 'utf8');
 
