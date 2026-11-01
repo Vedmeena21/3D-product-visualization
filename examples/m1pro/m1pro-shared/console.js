@@ -5,7 +5,7 @@
 // every label says where it came from. update(s) redraws the live parts from the frame's state.
 import {BATTERY, LIFE_LIT, LINK_KEYS, LINKS, SPEC, SWITCH} from './dims.js';
 
-export const C = {ink: '#141413', mute: '#83827d', faint: '#d9d6cb', line: '#e8e6dc', panel: 'rgba(250,249,245,.96)', acc: '#d97757', accInk: '#b8512f', dark: '#262624', lime: '#b6e61f', alt: '#3c79a8', flag: '#a8342a'};
+export const C = {ink: '#141413', mute: '#87867f', faint: '#dedcd1', line: '#e8e6dc', panel: 'rgba(250,249,245,.96)', acc: '#d97757', accInk: '#c6613f', dark: '#262624', lime: '#b6e61f', alt: '#6a9bcc', flag: '#bf4d43'};
 export const VIEWS = ['hero', 'top', 'side', 'bottom', 'switch', 'wheel', 'sensor'];
 export const VIEW_LABEL = {hero: 'HERO', top: 'TOP', side: 'SIDE', bottom: 'UNDERSIDE', switch: 'SWITCH', wheel: 'WHEEL', sensor: 'SENSOR'};
 export const DISPLAY = ['labels', 'xray', 'section', 'exploded', 'orbit'];
@@ -35,7 +35,7 @@ const CSS = `
 .big{position:absolute;left:340px;top:578px;white-space:nowrap;background:${C.panel};border:1px solid ${C.line};border-radius:14px;box-shadow:0 1px 2px rgba(20,20,19,.05),0 10px 28px rgba(20,20,19,.1);padding:14px 20px 15px 18px}
 .big b{display:block;font:500 62px var(--serif);letter-spacing:-1.2px;line-height:1;color:${C.ink}}
 .big b small{font-size:24px;letter-spacing:0;margin-left:6px;color:${C.accInk}}
-.big span{display:block;margin-top:9px;font:600 9.6px 'JetBrains Mono',monospace;letter-spacing:1.8px;color:#5f5e59}
+.big span{display:block;margin-top:9px;font:600 9.6px 'JetBrains Mono',monospace;letter-spacing:1.8px;color:#5e5d59}
 .big i{display:block;width:34px;height:4px;border-radius:2px;background:${C.acc};margin-bottom:12px}
 .card{position:absolute;white-space:nowrap}
 .cur{position:absolute;left:0;top:0;z-index:50;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
@@ -66,7 +66,7 @@ function drawDim({a, b, lod, h, lodMm, k}) {
   const col = over ? C.alt : C.acc;
   let s = `<g opacity="${o}">`;
   // extension lines from the skate plane and the pad, the dimension between them with its arrowheads
-  for (const p of [a, b]) s += `<line x1="${f1(p[0] - 6)}" y1="${f1(p[1])}" x2="${f1(x - 8)}" y2="${f1(p[1])}" stroke="#85847e" stroke-width=".8"/>`;
+  for (const p of [a, b]) s += `<line x1="${f1(p[0] - 6)}" y1="${f1(p[1])}" x2="${f1(x - 8)}" y2="${f1(p[1])}" stroke="#87867f" stroke-width=".8"/>`;
   s += `<line x1="${f1(x)}" y1="${f1(a[1])}" x2="${f1(x)}" y2="${f1(b[1])}" stroke="${col}" stroke-width="1.4"/>`;
   const hd = Math.abs(b[1] - a[1]);
   if (hd > 9) for (const [p, dir] of [[a, 1], [b, -1]]) s += `<path d="M${f1(x - 3)} ${f1(p[1] + 6 * dir)} L${f1(x)} ${f1(p[1])} L${f1(x + 3)} ${f1(p[1] + 6 * dir)}" fill="none" stroke="${col}" stroke-width="1.2"/>`;
@@ -116,15 +116,15 @@ function drawLoupe(L) {
   s += `<defs><clipPath id="lc"><circle cx="150" cy="150" r="${R - 1}"/></clipPath><pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#2e3336"/><line x1="0" y1="0" x2="0" y2="5" stroke="#555c60" stroke-width="1.6"/></pattern></defs>`;
   s += `<circle cx="${cx}" cy="${cy}" r="${R + 3}" fill="#faf9f5" stroke="${C.ink}" stroke-width="1.6"/>`;
   s += `<g transform="translate(${cx - 150} ${cy - 150})"><g clip-path="url(#lc)">`;
-  for (let g = 0; g <= 300; g += 12) s += `<line x1="${g}" y1="0" x2="${g}" y2="300" stroke="#efede5" stroke-width=".8"/><line x1="0" y1="${g}" x2="300" y2="${g}" stroke="#efede5" stroke-width=".8"/>`;
+  for (let g = 0; g <= 300; g += 12) s += `<line x1="${g}" y1="0" x2="${g}" y2="300" stroke="#f0eee6" stroke-width=".8"/><line x1="0" y1="${g}" x2="300" y2="${g}" stroke="#f0eee6" stroke-width=".8"/>`;
   // housing, cut: hatched walls round a light cavity, an opening in the top for the plunger
-  s += `<rect x="30" y="92" width="240" height="144" rx="6" fill="url(#hatch)"/><rect x="42" y="104" width="216" height="120" fill="#f1efe8"/><rect x="156" y="88" width="44" height="18" fill="#faf9f5"/>`;
+  s += `<rect x="30" y="92" width="240" height="144" rx="6" fill="url(#hatch)"/><rect x="42" y="104" width="216" height="120" fill="#f5f4ed"/><rect x="156" y="88" width="44" height="18" fill="#faf9f5"/>`;
   // terminals: COM under the blade's root, NO and NC either side of its free end; pins out of the base
   const live = closed ? C.lime : '#6b7276';
-  s += `<rect x="60" y="150" width="12" height="74" fill="${closed ? '#d97757' : '#85847e'}"/><rect x="62" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#a09e96'}"/>`;
-  s += `<rect x="230" y="198" width="12" height="26" fill="${closed ? '#d97757' : '#85847e'}"/><rect x="232" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#a09e96'}"/>`;
-  s += `<rect x="230" y="104" width="12" height="30" fill="#85847e"/><rect x="146" y="236" width="8" height="30" fill="#a09e96"/>`;
-  s += `<circle cx="236" cy="138" r="4.5" fill="#cfcdc4" stroke="#5d5c57"/><circle cx="236" cy="194" r="4.5" fill="${closed ? C.lime : '#cfcdc4'}" stroke="#5d5c57"/>`;
+  s += `<rect x="60" y="150" width="12" height="74" fill="${closed ? '#d97757' : '#87867f'}"/><rect x="62" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#9c9a92'}"/>`;
+  s += `<rect x="230" y="198" width="12" height="26" fill="${closed ? '#d97757' : '#87867f'}"/><rect x="232" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#9c9a92'}"/>`;
+  s += `<rect x="230" y="104" width="12" height="30" fill="#87867f"/><rect x="146" y="236" width="8" height="30" fill="#9c9a92"/>`;
+  s += `<circle cx="236" cy="138" r="4.5" fill="#d1cfc5" stroke="#5e5d59"/><circle cx="236" cy="194" r="4.5" fill="${closed ? C.lime : '#d1cfc5'}" stroke="#5e5d59"/>`;
   // the blade: root on COM at (66, 146), pressed down in the middle by the plunger, free end on NC or NO
   const tipY = 146 + 40 * L.snap;
   const midY = Math.max(146 + (tipY - 146) * (112 / 170), 146 + P);
@@ -221,7 +221,7 @@ export function createConsole(app) {
   add(`<div class="mo" style="position:absolute;left:76px;top:54px;color:${C.acc};font-size:9px;font-weight:600;letter-spacing:3px">PRO</div>`);
   add(`<div class="sm" style="position:absolute;left:182px;top:22px;letter-spacing:2.4px">WIRELESS GAMING MOUSE</div>`);
   add(`<div style="position:absolute;left:181px;top:37px;font:500 35px var(--serif);letter-spacing:-.6px;line-height:1">GravaStar Mercury M1 Pro <span style="color:${C.acc};font-weight:400">/</span></div>`);
-  add(`<div class="mo" style="position:absolute;left:182px;top:77px;font-size:11.2px;letter-spacing:2.2px;color:#5f5e59">GUNMETAL GRAY / TEARDOWN · SENSOR TO REPORT</div>`);
+  add(`<div class="mo" style="position:absolute;left:182px;top:77px;font-size:11.2px;letter-spacing:2.2px;color:#5e5d59">GUNMETAL GRAY / TEARDOWN · SENSOR TO REPORT</div>`);
   add(`<div class="sm xtra" style="position:absolute;left:1046px;top:49px;letter-spacing:2.6px;font-size:9.6px">MAGNESIUM SKELETON · PAW3395 · nRF52833</div>`);
   add(`<div class="xtra" style="position:absolute;left:1386px;top:34px;color:${C.accInk};font:500 42px var(--serif);letter-spacing:-.6px;line-height:1">88<span style="font-size:20px">G</span></div>`);
   add(`<div class="xtra" style="position:absolute;left:1488px;top:33px;width:1px;height:44px;background:${C.faint}"></div>`);
@@ -320,7 +320,7 @@ export function createConsole(app) {
     add(`<div class="mo" style="position:absolute;left:282px;top:${y}px;font-size:9.4px;font-weight:700">${(BATTERY.mAh / L.life).toFixed(2)} mA</div>`);
     add(`<div class="mo" style="position:absolute;left:346px;top:${y}px;font-size:8.6px;color:${C.mute}">${(BATTERY.alt / L.life).toFixed(2)}</div>`);
   });
-  add(`<div class="sm" style="position:absolute;left:42px;top:846px;font-size:6.8px;letter-spacing:.8px;color:#a8a69d">LIGHTS ON (GRAVASTAR.DE, FLAGGED): 1K ${LIFE_LIT.k1} H · BT ${LIFE_LIT.bt} H · 4K ${LIFE_LIT.k4} H</div>`);
+  add(`<div class="sm" style="position:absolute;left:42px;top:846px;font-size:6.8px;letter-spacing:.8px;color:#b0aea5">LIGHTS ON (GRAVASTAR.DE, FLAGGED): 1K ${LIFE_LIT.k1} H · BT ${LIFE_LIT.bt} H · 4K ${LIFE_LIT.k4} H</div>`);
 
   // ------------------------------------------------------------ 10 gesture timeline
   panel(430, 752, 740, 108, 'GESTURE TIMELINE', '10');
@@ -372,7 +372,7 @@ export function createConsole(app) {
     <div class="mo" style="font-size:12px;font-weight:700;letter-spacing:4px;color:${C.lime}">GRAVASTAR · WIRELESS GAMING MOUSE</div>
     <div style="margin-top:16px;font:500 88px var(--serif);letter-spacing:-2px;line-height:.98;color:#f5f3ec">Mercury<br>M1 Pro</div>
     <div style="margin-top:22px;width:44px;height:3px;background:${C.lime}"></div>
-    <div class="mo" style="margin-top:16px;font-size:11.5px;letter-spacing:2.6px;color:#a09e96">GUNMETAL GRAY · MAGNESIUM SKELETON · 88 G</div>
+    <div class="mo" style="margin-top:16px;font-size:11.5px;letter-spacing:2.6px;color:#9c9a92">GUNMETAL GRAY · MAGNESIUM SKELETON · 88 G</div>
     <div class="mo" style="margin-top:7px;font-size:11.5px;letter-spacing:2.6px;color:#6f777b">A TEARDOWN, FROM THE SENSOR TO THE REPORT</div></div>`);
   const endCard = add(`<div class="card" style="left:96px;top:196px;background:${C.panel};border:1px solid ${C.line};border-radius:8px;box-shadow:0 4px 22px rgba(30,40,30,.14);padding:38px 46px 34px">
     <div class="mo" style="font-size:11.5px;font-weight:700;letter-spacing:4px;color:${C.accInk}">GRAVASTAR · GUNMETAL GRAY</div>
@@ -503,7 +503,7 @@ export function createConsole(app) {
       for (const k of SEQS) {
         const on = s.seq === k;
         btn[k].style.background = on ? C.acc : 'transparent';
-        btn[k].style.color = on ? '#fff' : '#85847e';
+        btn[k].style.color = on ? '#fff' : '#87867f';
         btn[k].style.borderRadius = '4px';
       }
       for (const k of LINK_KEYS) onBtn('link_' + k, s.link === k);
@@ -541,7 +541,7 @@ export function createConsole(app) {
         const ex = right ? lx - 8 : lx + c.w - 8;
         const kx = ex + (right ? -18 : 18);
         const o = c.o.toFixed(2);
-        lh += `<polyline points="${ax.toFixed(1)},${ay.toFixed(1)} ${kx.toFixed(1)},${(ly + 6).toFixed(1)} ${ex.toFixed(1)},${(ly + 6).toFixed(1)}" fill="none" stroke="#85847e" stroke-width=".85" opacity="${o}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="3.2" fill="#fff" opacity="${o}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="2.1" fill="${C.acc}" opacity="${o}"/>`;
+        lh += `<polyline points="${ax.toFixed(1)},${ay.toFixed(1)} ${kx.toFixed(1)},${(ly + 6).toFixed(1)} ${ex.toFixed(1)},${(ly + 6).toFixed(1)}" fill="none" stroke="#87867f" stroke-width=".85" opacity="${o}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="3.2" fill="#fff" opacity="${o}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="2.1" fill="${C.acc}" opacity="${o}"/>`;
         ch += `<div class="call" style="left:${lx.toFixed(1)}px;top:${(ly - 1).toFixed(1)}px;width:${c.w}px;box-sizing:border-box;opacity:${o}"><b><em>${c.n}</em>${c.name}</b><span>${c.sub}</span></div>`;
       }
       callSvg.innerHTML = lh;
