@@ -10,6 +10,14 @@ You describe the product's parts, motions and the story you want to tell. The ki
 
 Because the picture is a pure function of time, the page, the film and the sound can never drift apart.
 
+## Example: GravaStar Mercury M1 Pro
+
+The included example is a gaming mouse: 4K-report flick, exploded layers, sensor cutaway, and the switch closing at 0.30 mm in 20× slow motion.
+
+![Example film preview](media/preview.gif)
+
+[Watch the full film](media/m1pro-film.mp4) (1080p60 with sound; play in QuickTime, VLC or a browser, as some editor previews play it silent).
+
 ## Why use it
 
 | You want | You get |
@@ -18,14 +26,6 @@ Because the picture is a pure function of time, the page, the film and the sound
 | A shareable demo | a single HTML file under 1 MB, no server, works offline |
 | A launch-style video | deterministic frame capture, no screen recording, repeatable edits |
 | Honest specs | every number on screen is real or labelled as assumed |
-
-## Example: GravaStar Mercury M1 Pro
-
-The included example is a gaming mouse: 4K-report flick, exploded layers, sensor cutaway, and the switch closing at 0.30 mm in 20× slow motion.
-
-![Example film preview](media/preview.gif)
-
-[Watch the full film](media/m1pro-film.mp4) (1080p60 with sound; play in QuickTime, VLC or a browser, as some editor previews play it silent).
 
 ## Quick start
 
