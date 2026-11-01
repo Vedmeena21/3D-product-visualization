@@ -18,6 +18,15 @@
 
 Tell Claude what to take apart. It models the product in 3D, pulls it into layers, cuts it open, slows down the one moment that matters, and scores the result: one offline page you can drive, and one video you can post.
 
+## Why this exists
+
+| The usual way | What goes wrong | Here |
+|---|---|---|
+| Screen-record a 3D demo | Dropped frames, a wobbly timeline, no way to re-take one shot | Every frame is drawn from an exact time, so a re-render is identical |
+| Animate in a video editor, then build a separate web demo | Two sources of truth that drift apart | One scene drives the page, the video and the sound |
+| Add numbers and callouts by hand | Specs go stale or get invented | Values come from the data, and assumed ones are labelled on screen |
+| Hire a studio for a product that isn't built yet | Slow and costly to revise | Change the data, re-render |
+
 ## What you get
 
 - **A live page.** One HTML file under 1 MB, no server. It tours itself until you touch it, then hands over control.
@@ -58,6 +67,13 @@ flowchart LR
 ```
 
 The picture depends only on the time `t`, so the page, the video and the sound can't drift apart.
+
+## Principles
+
+- **Time in, picture out.** A scene is `render(t)` and nothing else; no hidden state.
+- **Real or labelled.** A number on screen is sourced, or it says it's assumed.
+- **Look before you render.** Check stills first; a full render is the last step.
+- **Nothing global.** Everything installs inside the project folder.
 
 ## Get started
 
@@ -145,6 +161,15 @@ Then ask in plain words:
 
 Claude reads [SKILL.md](SKILL.md), researches the real dimensions, models the parts, edits the video, and shows you stills as it goes. Good first targets: anything with a mechanism you can see in motion, such as keyboards, cameras, watches, headphones and drones.
 
+## What Claude does, step by step
+
+1. **Researches** the product: real dimensions, parts, switches, sensors, what's public and what's assumed.
+2. **Models** each part in millimetres and groups them into layers, so they can pull apart.
+3. **Describes the motion** as data: what moves, how far, when.
+4. **Cuts the edit** on the beat: one idea per shot, slow motion only where it earns it.
+5. **Shows you stills** after every change, so mistakes are caught before an hour-long render.
+6. **Scores and renders** the video, then hands you the page and the file.
+
 ## Build one by hand
 
 1. Copy `examples/m1pro/` to `examples/<product>/` and rename the folders.
@@ -155,11 +180,17 @@ Claude reads [SKILL.md](SKILL.md), researches the real dimensions, models the pa
 
 More: [docs/make-your-own.md](docs/make-your-own.md).
 
-## Good to know
+## When something goes wrong
 
-- Without a graphics card the video still renders, but takes about a second per frame.
-- The mouse example uses public specifications; assumed values are labelled in the video.
-- Contributions are welcome: a new example product is the most useful one.
+- **Page is blank or the capture says "missing .html".** Run `npm run build` first.
+- **The video plays without sound.** Some editor previews can't play AAC audio. Open it in QuickTime, VLC or a browser.
+- **Rendering takes forever.** There's no GPU in reach, so it's using software rendering: about a second a frame. Check a few moments with `--at`, or render a slice with `--from 20 --to 30`.
+- **Chromium isn't found.** Run `npm run setup` again, or set `PLAYWRIGHT_BROWSERS_PATH=0` so it uses the copy inside the project.
+- **The score step fails.** It needs Python 3 with numpy, and `ffmpeg` on your PATH.
+
+## Contributing
+
+A new example product is the most useful contribution: copy `examples/hello-cube/`, grow it, and open a pull request with a still or a short clip.
 
 ## Licence
 
