@@ -9,9 +9,9 @@ Whatever the product, one idea runs through the whole repo: **the picture is a p
 | Edit | `film.js` | `SCRIPT` of timed events, speed ramps, camera views, orbit |
 | Overlay | `console.js` | Panels, callouts, the switch schematic with its force chart |
 | Page | `live.js` | Tour when idle, hands over to the user, returns after 25 s |
-| Sound | `score.py` + `timeline.json` | Cues found by sampling the film, so slow motion keeps its sound in sync |
+| Sound | `score.py` + `timeline.json` | Cues found by sampling the video, so slow motion keeps its sound in sync |
 
-The film is captured frame by frame (no real-time recording), so heavy shaders cost time, not quality.
+The video is captured frame by frame (no real-time recording), so heavy shaders cost time, not quality.
 
 ## The engine
 
