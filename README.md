@@ -63,6 +63,6 @@ More detail: [docs/make-your-own.md](docs/make-your-own.md). How it works: [docs
 
 ## Licence
 
-Released under the [MIT licence](LICENSE): you may use, change and share this code, including commercially, as long as the licence text stays with it.
+Created by [Vedmeena21](https://github.com/Vedmeena21). Copyright © 2026 Vedmeena21, released under the [MIT licence](LICENSE): you may use, change and share this code, including commercially, as long as this copyright notice and the licence text stay with it.
 
 GravaStar and Mercury M1 Pro are trademarks of their owner. The mouse example is an independent study based on public specifications; it is not made, endorsed or sponsored by GravaStar.
