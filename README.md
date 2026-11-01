@@ -10,7 +10,7 @@
 ![Cinematic output](https://img.shields.io/badge/output-1080p%20%C2%B7%2060%20fps%20%C2%B7%20%E2%88%9214%20LUFS-blue)
 ![Made with Claude Code](https://img.shields.io/badge/made%20with-Claude%20Code-d97757)
 
-[Watch the video](media/m1pro-video.mp4) · [Get started](#get-started) · [Your first scene](#your-first-scene) · [Use it with Claude](#use-it-with-claude) · [How it works](docs/how-it-works.md)
+[Watch the video](media/m1pro-video.mp4) · [Get started](#get-started) · [Your first scene](#your-first-scene) · [Use it with Claude](#use-it-with-claude) · [How it works](docs/how-it-works.md) · [Troubleshooting](#when-something-goes-wrong)
 
 ![Example video preview](media/preview.gif)
 
