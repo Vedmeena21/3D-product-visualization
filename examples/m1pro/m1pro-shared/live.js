@@ -1,12 +1,12 @@
-// The M1 Pro as a page you drive: the film's mouse, pad and console in real time. FLICK, CLICK and SCROLL start a
+// The M1 Pro as a page you drive: the video's mouse, pad and console in real time. FLICK, CLICK and SCROLL start a
 // gesture, the play button pauses it, the timeline scrubs it, SPEED sets its pace (slow motion down to 0.1×); the link
 // and DPI buttons change what the reports carry; seven views, five displays, an orbit you drag and a zoom on the
-// wheel. Left alone it plays the film's script as an auto tour with the operator's cursor, looped; a click, drag,
+// wheel. Left alone it plays the video's script as an auto tour with the operator's cursor, looped; a click, drag,
 // wheel or key hands control to the visitor, 25 s of quiet hands it back.
 import {warmComposer} from 'rig/warm.js';
 import {createConsole, DISPLAY, SEQS, VIEWS} from './console.js';
 import {LINK_KEYS, SPEC} from './dims.js';
-import {camAt, displayAt, DURATION, filmAt, makeConsoleFrame, makeCursor, sceneState, seqAt, viewAt, VIEW_FN} from './film.js';
+import {camAt, displayAt, DURATION, videoAt, makeConsoleFrame, makeCursor, sceneState, seqAt, viewAt, VIEW_FN} from './video.js';
 import {SEQ, stateAt} from './model.js';
 import {createStage} from './stage.js';
 
@@ -101,7 +101,7 @@ export function runLive() {
   const disp = Object.fromEntries(DISPLAY.map((k) => [k, {on: 0, t: -9}]));
   const off = {az: 0, el: 0, k: 1};
   const cam = {...VIEW_FN.hero(0), travelX: 1};
-  // the film's own layer (studio light, console build, cards, the shell's power-on, the switch detail), eased
+  // the video's own layer (studio light, console build, cards, the shell's power-on, the switch detail), eased
   const fx = {studio: 0, reveal: 0, title: 0, endcard: 0, gate: 0, loupe: 0, envRot: -2.3};
   let ring = {t: -9, x: 0, y: 0};
   const eased = (k, dur = 0.7) => {
@@ -300,7 +300,7 @@ export function runLive() {
       const c = T - AP.t0;
       const loop = Math.floor(c / DURATION);
       const cyc = c - loop * DURATION;
-      f = filmAt(cyc);
+      f = videoAt(cyc);
       seq = f.seq;
       tau = f.tau;
       speed = f.rate;

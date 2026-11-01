@@ -10,12 +10,12 @@ Builds a product as one offline HTML page you can drive, plus a frame-by-frame v
 ## Steps
 
 1. **Research first.** Collect real dimensions, parts and specs. Mark anything assumed; it is labelled on screen.
-2. **Copy the example** to `examples/<product>/` (`<product>-shared`, `-live`, `-film`).
+2. **Copy the example** to `examples/<product>/` (`<product>-shared`, `-live`, `-video`).
 3. **Model the parts** in millimetres, grouped by layer so the exploded view can stagger them.
 4. **Describe motion as data** (`model.js`): what moves, how far, when. The picture is a pure function of time: `render(t)` takes one number and keeps no state.
-5. **Write the edit** (`film.js` `SCRIPT`): cuts on the music's bars, one idea per shot, slow only the moment that matters.
-6. **Build and look.** `node engine/build.mjs <product>-film`, then `node engine/capture.mjs <product>-film --at 5,12,30 --out-dir out/stills` and view the stills. Fix, repeat.
-7. **Sound and video.** `node examples/<product>/tools/timeline.mjs`, then `python3 engine/audio/run.py examples/<product>/<product>-shared/score.py`, then `node engine/capture.mjs <product>-film --out out/film.mp4`. Mux the audio with ffmpeg.
+5. **Write the edit** (`video.js` `SCRIPT`): cuts on the music's bars, one idea per shot, slow only the moment that matters.
+6. **Build and look.** `node engine/build.mjs <product>-video`, then `node engine/capture.mjs <product>-video --at 5,12,30 --out-dir out/stills` and view the stills. Fix, repeat.
+7. **Sound and video.** `node examples/<product>/tools/timeline.mjs`, then `python3 engine/audio/run.py examples/<product>/<product>-shared/score.py`, then `node engine/capture.mjs <product>-video --out out/video.mp4`. Mux the audio with ffmpeg.
 
 ## Rules
 

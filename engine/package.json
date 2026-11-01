@@ -2,7 +2,7 @@
   "name": "product-viz-engine",
   "version": "1.0.0",
   "private": true,
-  "description": "Browser runtime, bundler, frame capture and sound engine for 3D product films.",
+  "description": "Browser runtime, bundler, frame capture and sound engine for 3D product videos.",
   "license": "MIT",
   "dependencies": {
     "@fontsource-variable/inter": "5.3.0",

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Bundles a scene folder (one with a main.js) into a single offline HTML file: three.js, fonts and CSS inlined.
-//   node engine/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-film
+//   node engine/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-video
 //   node engine/build.mjs m1pro-live            (a bare name is looked up under examples/ and examples/*/)
 // Output: <out>/dist/<folder name>.html
 import fs from 'node:fs';

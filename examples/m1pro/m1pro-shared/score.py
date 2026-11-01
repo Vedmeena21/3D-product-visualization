@@ -1,4 +1,4 @@
-"""Score for the GravaStar Mercury M1 Pro film: a cool chord bed (Em9 at 92 bpm, shots cut on its bars) at full level
+"""Score for the GravaStar Mercury M1 Pro video: a cool chord bed (Em9 at 92 bpm, shots cut on its bars) at full level
 under the hook, with a low hit as it starts; held low through the dark title under a slow air sweep, a chime when the
 shell lights, a riser into the walkthrough's first flick; soft ticks as the console builds; air on each cut; cloth
 under every flick, a breath on each lift and a soft
@@ -9,7 +9,7 @@ landing, and a last chord under the card.
 
     python3 engine/audio/run.py examples/m1pro/m1pro-shared/score.py
 
-Every time comes from m1pro-film/timeline.json, which examples/m1pro/tools/timeline.mjs samples from film.js and model.js.
+Every time comes from m1pro-video/timeline.json, which examples/m1pro/tools/timeline.mjs samples from video.js and model.js.
 """
 
 import os
@@ -19,7 +19,7 @@ import numpy as np
 from audio.music import bed, chords
 from audio.synth import SR, airy, blip, chime, click, hiss, hz, impact, riser, thud, whoosh
 
-TIMELINE = "../m1pro-film/timeline.json"
+TIMELINE = "../m1pro-video/timeline.json"
 OUT = os.path.join(os.environ.get("PV_OUT", "out"), "m1pro-score.wav")
 TARGET_LUFS = -14.0
 SEED = 1600

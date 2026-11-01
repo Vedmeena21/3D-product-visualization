@@ -10,7 +10,7 @@
 ![Cinematic output](https://img.shields.io/badge/output-1080p%20%C2%B7%2060%20fps%20%C2%B7%20%E2%88%9214%20LUFS-blue)
 ![Made with Claude Code](https://img.shields.io/badge/made%20with-Claude%20Code-d97757)
 
-[Watch the video](media/m1pro-film.mp4) · [Get started](#get-started) · [Your first scene](#your-first-scene) · [Use it with Claude](#use-it-with-claude) · [How it works](docs/how-it-works.md)
+[Watch the video](media/m1pro-video.mp4) · [Get started](#get-started) · [Your first scene](#your-first-scene) · [Use it with Claude](#use-it-with-claude) · [How it works](docs/how-it-works.md)
 
 ![Example video preview](media/preview.gif)
 
@@ -51,7 +51,7 @@ The worked example is a gaming mouse, the GravaStar Mercury M1 Pro: a 4K-report 
 
 ## Use it when
 
-- You need a launch-style video of a product that doesn't exist yet, or that you can't film.
+- You need a launch-style video of a product that doesn't exist yet, or that you can't video.
 - You want to explain how something works inside, not just how it looks.
 - You want a shareable demo page with no server, accounts or plugins.
 - You want the video re-rendered exactly after every change to the edit.
@@ -104,20 +104,20 @@ You need Node.js 20+ and `ffmpeg`. Python 3 is only needed for the sound.
    ```bash
    npm run timeline
    npm run score
-   npm run film
+   npm run video
    ffmpeg -i out/m1pro-silent.mp4 -i out/m1pro-score.wav -c:v copy -c:a aac -shortest out/m1pro.mp4
    ```
 
 5. **Check a few moments first, if you like.** Save stills at chosen seconds instead of rendering everything.
 
    ```bash
-   node engine/capture.mjs m1pro-film --at 5,22,36.9 --out-dir out/stills
+   node engine/capture.mjs m1pro-video --at 5,22,36.9 --out-dir out/stills
    ```
 
-No graphics card? The video still renders, at about a second a frame, with this in place of `npm run film`:
+No graphics card? The video still renders, at about a second a frame, with this in place of `npm run video`:
 
 ```bash
-PLAYWRIGHT_BROWSERS_PATH=0 node --import ./examples/m1pro/tools/swgl.mjs engine/capture.mjs m1pro-film --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4
+PLAYWRIGHT_BROWSERS_PATH=0 node --import ./examples/m1pro/tools/swgl.mjs engine/capture.mjs m1pro-video --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4
 ```
 
 ## Your first scene
@@ -125,7 +125,7 @@ PLAYWRIGHT_BROWSERS_PATH=0 node --import ./examples/m1pro/tools/swgl.mjs engine/
 The smallest scene in the repo is a cube. The whole idea is the last four lines: draw the frame for time `t`.
 
 ```js
-import {runSim} from 'rig/film.js';
+import {runSim} from 'rig/video.js';
 
 runSim({duration: 6, fps: 60}, async ({canvas, capture}) => {
   // … renderer, scene, camera, one cube (see examples/hello-cube/main.js)

@@ -1,8 +1,8 @@
-// Writes m1pro/m1pro-film/timeline.json from the film's SCRIPT and the gesture model, so the stills, the video and
+// Writes m1pro/m1pro-video/timeline.json from the video's SCRIPT and the gesture model, so the stills, the video and
 // the score all read the same times. Beats are the operator's moves; the rest are sound events found by sampling the
-// film itself (so the click's speed ramp carries through): flicks (with their film-time duration), lifts and
+// video itself (so the click's speed ramp carries through): flicks (with their video-time duration), lifts and
 // set-downs, switch contacts closing and opening (with the playback rate at that moment), wheel detents, and the
-// film's own cues: the reflection sweep, the shell lighting, the studio coming up, cuts, feature numbers, the
+// video's own cues: the reflection sweep, the shell lighting, the studio coming up, cuts, feature numbers, the
 // explode and its return, the end card.
 // Run: node examples/m1pro/tools/timeline.mjs
 import fs from 'node:fs';
@@ -14,7 +14,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../../..');
 const require = createRequire(path.join(ROOT, 'engine/x.js'));
 const esbuild = require('esbuild');
-const entry = `export {SCRIPT, DURATION, seqAt, keyAt} from '${ROOT}/examples/m1pro/m1pro-shared/film.js';
+const entry = `export {SCRIPT, DURATION, seqAt, keyAt} from '${ROOT}/examples/m1pro/m1pro-shared/video.js';
 export {SEQ, contactAt, wheelAt, handAt} from '${ROOT}/examples/m1pro/m1pro-shared/model.js';`;
 const res = await esbuild.build({
   stdin: {contents: entry, resolveDir: ROOT, loader: 'js'},
@@ -28,7 +28,7 @@ const res = await esbuild.build({
     {name: 'kit', setup(b) {
       b.onResolve({filter: /^rig\//}, (a) => ({path: path.join(ROOT, 'engine/web', a.path.slice(4))}));
     }},
-    // film.js imports console.js, which touches the DOM only when called; stub the browser-only kit runtime
+    // video.js imports console.js, which touches the DOM only when called; stub the browser-only kit runtime
     {name: 'stub', setup(b) {
       b.onResolve({filter: /runtime\.js$/}, () => ({path: 'stub', namespace: 'stub'}));
       b.onLoad({filter: /.*/, namespace: 'stub'}, () => ({contents: 'export const runSim = () => {};'}));
@@ -55,7 +55,7 @@ const out = {
   opens: [],
   detents: [],
 };
-// the film's cues, from its keys
+// the video's cues, from its keys
 const rise = (key, lvl = 0.5) => {
   const dt = 0.005;
   for (let t = dt; t < DURATION; t += dt) if (keyAt(key, t - dt) < lvl && keyAt(key, t) >= lvl) return r3(t);
@@ -70,7 +70,7 @@ out.studioDown = keyStart('studio', 0);
 out.endcard = keyStart('endcard', 1);
 out.studioHalf = rise('studio');
 
-// sample the film at 0.25 ms: gesture events in film time
+// sample the video at 0.25 ms: gesture events in video time
 const dt = 0.00025;
 let prev = null;
 let flick = null;
@@ -101,6 +101,6 @@ for (let t = 0; t <= DURATION; t += dt) {
   } else flick = null;
   prev = {t0: s.t0, tau: s.tau};
 }
-fs.writeFileSync(path.join(ROOT, 'examples/m1pro/m1pro-film/timeline.json'), JSON.stringify(out));
+fs.writeFileSync(path.join(ROOT, 'examples/m1pro/m1pro-video/timeline.json'), JSON.stringify(out));
 console.log(Object.fromEntries(Object.entries(out).map(([k, v]) => [k, Array.isArray(v) ? v.length : v])));
 console.log('closes', out.closes, '\nopens', out.opens, '\nflicks', out.flicks);

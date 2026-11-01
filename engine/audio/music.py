@@ -1,4 +1,4 @@
-"""The bed under the film: chords, a few keys, a bass line and light drums, all generated."""
+"""The bed under the video: chords, a few keys, a bass line and light drums, all generated."""
 
 import numpy as np
 

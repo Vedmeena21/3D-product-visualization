@@ -2,13 +2,13 @@
   "name": "3d-product-visualization",
   "version": "1.0.0",
   "private": true,
-  "description": "Turn a real product into an interactive 3D explainer page and a 60 fps film with a procedural score. Worked example: a gaming mouse.",
+  "description": "Turn a real product into an interactive 3D explainer page and a 60 fps video with a procedural score. Worked example: a gaming mouse.",
   "license": "MIT",
   "scripts": {
     "setup": "cd engine && npm install && npx playwright install chromium",
-    "build": "node engine/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-film",
+    "build": "node engine/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-video",
     "timeline": "node examples/m1pro/tools/timeline.mjs",
     "score": "python3 engine/audio/run.py examples/m1pro/m1pro-shared/score.py",
-    "film": "node engine/capture.mjs m1pro-film --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4"
+    "video": "node engine/capture.mjs m1pro-video --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4"
   }
 }

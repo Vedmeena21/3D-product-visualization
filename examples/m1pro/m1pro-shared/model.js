@@ -50,7 +50,7 @@ export const SEQ = {
       [1.9, 'REST'],
     ],
   },
-  // the hand off the mouse: the film's opening and close
+  // the hand off the mouse: the video's opening and close
   rest: {dur: 8, label: 'REST', moves: [], lifts: [], presses: {L: [], R: []}, spins: [], phases: [[0, 'HAND AT REST']]},
   scroll: {
     dur: 2.6,

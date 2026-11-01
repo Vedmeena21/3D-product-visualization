@@ -1,11 +1,11 @@
-// GRAVASTAR MERCURY M1 PRO, the film: the mouse (mouse.js) on its pad (stage.js) under the console (console.js).
+// GRAVASTAR MERCURY M1 PRO, the video: the mouse (mouse.js) on its pad (stage.js) under the console (console.js).
 // It opens in a dark room, a reflection sweeping the skeleton until the shell lights; the studio comes up and the
 // console builds panel by panel. The operator flicks it, cuts it down the centreline to watch the lens leave the pad,
 // x-rays it for the left switch (slowed twentyfold through the press and the release, a schematic of the switch's
 // blade beside it) and the wheel, turns it over for the slider and the receiver, flicks again on the 4K link,
 // explodes it layer by layer and closes on a card. Each shot changes on a bar of the score (92 bpm). Every pose and
 // number is a pure function of t.
-import {runSim} from 'rig/film.js';
+import {runSim} from 'rig/video.js';
 import {createConsole, DISPLAY, PANELS} from './console.js';
 import {SPEC, SWITCH} from './dims.js';
 import {contactAt, lastEdge, phaseAt, pressAt, SEQ, stateAt, wheelAt} from './model.js';
@@ -81,8 +81,8 @@ const smoother = (x) => {
 };
 const ss = (a, b, t) => smoother((t - a) / (b - a));
 
-// ------------------------------------------------------------ the speed ramp: film seconds -> tau for a warped gesture
-// rate(tau) is piecewise linear; film time is the integral of dtau / rate, tabulated once at 0.5 ms of film time
+// ------------------------------------------------------------ the speed ramp: video seconds -> tau for a warped gesture
+// rate(tau) is piecewise linear; video time is the integral of dtau / rate, tabulated once at 0.5 ms of video time
 const WARPS = new Map();
 const warpTable = (warp, dur) => {
   if (WARPS.has(warp)) return WARPS.get(warp);
@@ -113,10 +113,10 @@ const warpAt = (e, dt) => {
   const tau = Math.min(SEQ[e.seq].dur, W.taus[i] + (W.taus[i + 1] - W.taus[i]) * Math.min(1, u - i));
   return {tau, rate: W.rate(tau)};
 };
-/** film seconds a warped gesture takes */
+/** video seconds a warped gesture takes */
 export const warpSpan = (e) => warpTable(e.warp, SEQ[e.seq].dur).end;
 
-// ------------------------------------------------------------ script state at film time t
+// ------------------------------------------------------------ script state at video time t
 export const seqAt = (t) => {
   const e = SCRIPT.filter((x) => x.seq && x.t <= t).pop();
   if (e.warp) return {seq: e.seq, ...warpAt(e, t - e.t), t0: e.t};
@@ -135,7 +135,7 @@ export const easedDisplay = (key, t, dur = 0.7) => {
 };
 export const linkAt = (t) => SCRIPT.filter((e) => e.link && e.t <= t).pop()?.link ?? 'k1';
 export const dpiAt = (t) => SCRIPT.filter((e) => e.dpi && e.t <= t).pop()?.dpi ?? SPEC.dpiDefault;
-/** a continuous film parameter (studio, reveal, title, endcard, gate, sweep, loupe), eased between its keys */
+/** a continuous video parameter (studio, reveal, title, endcard, gate, sweep, loupe), eased between its keys */
 export const keyAt = (key, t, def = 0) => {
   const ks = SCRIPT.filter((e) => e.set && key in e.set);
   let prev = def;
@@ -369,7 +369,7 @@ export const switchAt = (seq, tau, rate) => {
   // the blade crosses between the contacts in about half a millisecond (schematic)
   const age = te < 0 ? 1 : (tau - te) / 0.0005;
   const snap = c ? Math.min(1, age) : 1 - Math.min(1, age);
-  // a ring at the switch for half a second of film after each closing
+  // a ring at the switch for half a second of video after each closing
   const ringAge = te < 0 || !c ? 9 : (tau - te) / Math.max(0.02, rate);
   return {p, c, snap, dir: Math.sign(dp), ring: ringAge < 0.6 ? 1 - ringAge / 0.6 : 0, rate};
 };
@@ -423,8 +423,8 @@ export function makeConsoleFrame(ui, st) {
 /** the scene state from the model and the displays */
 export const sceneState = (m, o) => ({x: m.x, h: m.h, pL: m.pL, pR: m.pR, wheel: m.wheel, spot: m.tracking && o.section ? 0.9 : 0, ...o, glow: m.glow * (o.gate ?? 1)});
 
-/** everything the film draws at t, shared with the live page's tour */
-export const filmAt = (t) => {
+/** everything the video draws at t, shared with the live page's tour */
+export const videoAt = (t) => {
   const {seq, tau, rate} = seqAt(t);
   const disp = displayAt(t);
   const [vt0, view] = viewAt(t);
@@ -454,7 +454,7 @@ export const filmAt = (t) => {
   };
 };
 
-export function makeFilm() {
+export function makeVideo() {
   return async ({cfg, canvas, capture}) => {
     const st = createStage({canvas});
     // capture --config {"quality": {...}} overrides; the lite entry draws without AO or MSAA for software GL
@@ -469,7 +469,7 @@ export function makeFilm() {
     return {
       resize,
       render(t) {
-        const f = filmAt(t);
+        const f = videoAt(t);
         const cam = camAt(t, f.disp.orbit);
         const m = stateAt(f.seq, f.tau, {dpi: f.dpi, link: f.link, lod: 1});
         st.frame(sceneState(m, {link: f.link, xray: f.xray, explode: f.explode, section: f.section, travelX: cam.travelX, studio: f.studio, envRot: f.envRot, gate: f.gate}), {...cam, az: cam.az * D2R, el: cam.el * D2R});
@@ -482,4 +482,4 @@ export function makeFilm() {
 }
 void SWITCH;
 
-export const run = () => runSim(DEFAULTS, makeFilm());
+export const run = () => runSim(DEFAULTS, makeVideo());

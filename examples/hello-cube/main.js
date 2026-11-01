@@ -1,6 +1,6 @@
 // The smallest scene: a cube that turns once every 6 seconds. render(t) is all there is.
 import * as THREE from 'three';
-import {runSim} from 'rig/film.js';
+import {runSim} from 'rig/video.js';
 
 runSim({duration: 6, fps: 60}, async ({canvas, capture}) => {
   const renderer = new THREE.WebGLRenderer({canvas, antialias: true, preserveDrawingBuffer: true});

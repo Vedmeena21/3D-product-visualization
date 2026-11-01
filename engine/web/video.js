@@ -1,8 +1,8 @@
-// Runs a scene as a film. A scene is an async setup({cfg, canvas, capture}) that returns {render(t), resize?}.
+// Runs a scene as a video. A scene is an async setup({cfg, canvas, capture}) that returns {render(t), resize?}.
 //
 // Two modes share one render(t):
-//   capture  (?capture, set by engine/capture.mjs): nothing runs on its own. window.__film.seek(t) draws exactly time t
-//            and resolves once the frame is on screen, so the recorder can step through the film at any speed.
+//   capture  (?capture, set by engine/capture.mjs): nothing runs on its own. window.__video.seek(t) draws exactly time t
+//            and resolves once the frame is on screen, so the recorder can step through the video at any speed.
 //   playback (opened in a browser): plays in real time, loops, scaled to fit the window.
 export async function runSim(defaults, setup) {
   const capture = new URLSearchParams(location.search).has('capture');
@@ -12,19 +12,19 @@ export async function runSim(defaults, setup) {
   canvas.id = 'gl';
   app.appendChild(canvas);
 
-  const film = (window.__film = {ready: false, duration: cfg.duration, fps: cfg.fps});
+  const video = (window.__video = {ready: false, duration: cfg.duration, fps: cfg.fps});
   const scene = await setup({cfg, canvas, capture});
   await document.fonts.ready;
 
   const paint = () => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
-  film.seek = async (t) => {
+  video.seek = async (t) => {
     scene.render(t);
     await paint();
   };
 
   if (capture) {
-    await film.seek(0);
-    film.ready = true;
+    await video.seek(0);
+    video.ready = true;
     return;
   }
 
@@ -35,7 +35,7 @@ export async function runSim(defaults, setup) {
   };
   addEventListener('resize', fit);
   fit();
-  film.ready = true;
+  video.ready = true;
   const t0 = performance.now();
   const tick = () => {
     scene.render(((performance.now() - t0) / 1000) % cfg.duration);

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// Renders a built film page frame by frame.
-//   node engine/capture.mjs m1pro-film --size 1600x900 --dpr 1.2 --out out/film.mp4
-//   node engine/capture.mjs m1pro-film --at 1.5,22,36.9 --out-dir out/stills       (PNG stills, for review)
+// Renders a built video page frame by frame.
+//   node engine/capture.mjs m1pro-video --size 1600x900 --dpr 1.2 --out out/video.mp4
+//   node engine/capture.mjs m1pro-video --at 1.5,22,36.9 --out-dir out/stills       (PNG stills, for review)
 // Options: --fps N  --from S --to S (a slice)  --config '{"quality":{...}}' or a path to a JSON file
 import {spawn} from 'node:child_process';
 import fs from 'node:fs';
@@ -36,8 +36,8 @@ const page = await (await browser.newContext({viewport: {width: W, height: H}, d
 page.on('pageerror', (e) => console.error('page error:', e.message));
 await page.addInitScript((c) => (window.__CFG = c), cfg);
 await page.goto(`${pathToFileURL(html)}?capture`);
-await page.waitForFunction(() => window.__film && window.__film.ready, null, {timeout: 600000});
-const {duration, fps: pageFps} = await page.evaluate(() => ({duration: window.__film.duration, fps: window.__film.fps}));
+await page.waitForFunction(() => window.__video && window.__video.ready, null, {timeout: 600000});
+const {duration, fps: pageFps} = await page.evaluate(() => ({duration: window.__video.duration, fps: window.__video.fps}));
 const gl = await page.evaluate(() => {
   const g = document.createElement('canvas').getContext('webgl2');
   const e = g.getExtension('WEBGL_debug_renderer_info');
@@ -46,7 +46,7 @@ const gl = await page.evaluate(() => {
 console.log(`renderer: ${gl}`);
 
 const shot = async (t) => {
-  await page.evaluate((x) => window.__film.seek(x), t);
+  await page.evaluate((x) => window.__video.seek(x), t);
   return page.screenshot({type: 'png'});
 };
 
