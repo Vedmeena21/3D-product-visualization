@@ -35,17 +35,19 @@ Needs Node.js 20+. The film also needs `ffmpeg`; the score needs Python 3.
 git clone https://github.com/Vedmeena21/3D-product-visualization
 cd 3D-product-visualization
 npm run setup        # three.js, esbuild, Playwright + Chromium, installed into engine/
-npm run build        # -> teardown-out/dist/*.html
+npm run build        # -> out/dist/*.html
+pip install -r engine/requirements.txt   # only for the score (numpy)
 ```
 
-Open `teardown-out/dist/m1pro-live.html`. Then render the film:
+Open `out/dist/m1pro-live.html`. Then render the film:
 
 ```bash
 npm run timeline && npm run score && npm run film
-ffmpeg -i teardown-out/m1pro-silent.mp4 -i teardown-out/m1pro-score.wav -c:v copy -c:a aac -shortest teardown-out/m1pro.mp4
+ffmpeg -i out/m1pro-silent.mp4 -i out/m1pro-score.wav -c:v copy -c:a aac -shortest out/m1pro.mp4
 ```
 
-No GPU? Software rendering works at about a second a frame (see [docs/make-your-own.md](docs/make-your-own.md)).
+No GPU? Software rendering works at about a second a frame: run the film step as
+`PLAYWRIGHT_BROWSERS_PATH=0 node --import ./examples/m1pro/tools/swgl.mjs engine/capture.mjs m1pro-film --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4`.
 
 ## Make one for your product
 
@@ -61,11 +63,15 @@ Details and rules of thumb: [docs/make-your-own.md](docs/make-your-own.md). How 
 
 ```
 .
-├── engine/              runtime, builder, frame capture, sound engine (reusable for any product)
+├── engine/              reusable for any product
+│   ├── web/             film runtime, shader warm-up, seeded rng, base CSS
+│   ├── build.mjs        scene folder -> one offline HTML file
+│   ├── capture.mjs      frame-by-frame renderer (mp4 or review stills)
+│   └── audio/           synth, music bed, mixer and loudness mastering
 ├── examples/m1pro/      the worked example: model, motion, edit, overlay, score
 ├── docs/                how it works, make your own
 ├── media/               example film, poster, preview
-└── NOTICE.md  LICENSE
+└── LICENSE
 ```
 
 ## Licence
