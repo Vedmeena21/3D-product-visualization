@@ -25,3 +25,11 @@ Builds a product as one offline HTML page you can drive, plus a frame-by-frame v
 - No GPU: prefix captures with `PLAYWRIGHT_BROWSERS_PATH=0 node --import ./examples/m1pro/tools/swgl.mjs`.
 
 Details: `docs/how-it-works.md`, `docs/make-your-own.md`.
+
+## Before you hand it over
+
+- Stills checked at every cut, in the live page and in the video, not only the first frame.
+- Every number on screen is sourced or labelled as assumed.
+- `timeline.json` regenerated after the last edit, so the score matches the cuts.
+- Live page under 1 MB; score at −14 LUFS with peaks under −2 dBFS.
+- Nothing installed outside the project folder.
