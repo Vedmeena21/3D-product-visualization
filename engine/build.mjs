@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Bundles a scene folder (one with a main.js) into a single offline HTML file: three.js, fonts and CSS inlined.
 //   node engine/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-film
-//   node engine/build.mjs m1pro-live            (a bare name is looked up under examples/*/)
+//   node engine/build.mjs m1pro-live            (a bare name is looked up under examples/ and examples/*/)
 // Output: <out>/dist/<folder name>.html
 import fs from 'node:fs';
 import path from 'node:path';
@@ -12,6 +12,8 @@ const esbuild = need('esbuild');
 const find = (arg) => {
   const direct = path.resolve(arg);
   if (fs.existsSync(path.join(direct, 'main.js'))) return direct;
+  const top = path.join(REPO, 'examples', arg);
+  if (fs.existsSync(path.join(top, 'main.js'))) return top;
   for (const ex of fs.readdirSync(path.join(REPO, 'examples'))) {
     const p = path.join(REPO, 'examples', ex, arg);
     if (fs.existsSync(path.join(p, 'main.js'))) return p;

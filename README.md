@@ -10,7 +10,7 @@
 ![Cinematic output](https://img.shields.io/badge/output-1080p%20%C2%B7%2060%20fps%20%C2%B7%20%E2%88%9214%20LUFS-blue)
 ![Made with Claude Code](https://img.shields.io/badge/made%20with-Claude%20Code-d97757)
 
-[Watch the video](media/m1pro-film.mp4) · [Get started](#get-started) · [Use it with Claude](#use-it-with-claude) · [How it works](docs/how-it-works.md)
+[Watch the video](media/m1pro-film.mp4) · [Get started](#get-started) · [Your first scene](#your-first-scene) · [Use it with Claude](#use-it-with-claude) · [How it works](docs/how-it-works.md)
 
 ![Example video preview](media/preview.gif)
 
@@ -33,6 +33,19 @@ Tell Claude what to take apart. It models the product in 3D, pulls it into layer
 | Timing | one `render(t)` drives all three, so picture and sound never drift |
 
 The worked example is a gaming mouse, the GravaStar Mercury M1 Pro: a 4K-report flick, exploded layers, a sensor cutaway, and the switch closing at 0.30 mm in 20× slow motion.
+
+## Three ways to use it
+
+- **Ask Claude.** Describe the product; Claude builds the model, the edit and the score, and shows you stills as it goes.
+- **Drive the page.** Open the live HTML, orbit it, explode it, press its buttons, scrub the slow-motion switch.
+- **Own it as code.** A scene is plain JavaScript and one function of time, so you can diff it, tweak it and render it again.
+
+## Use it when
+
+- You need a launch-style video of a product that doesn't exist yet, or that you can't film.
+- You want to explain how something works inside, not just how it looks.
+- You want a shareable demo page with no server, accounts or plugins.
+- You want the video re-rendered exactly after every change to the edit.
 
 ## One idea underneath
 
@@ -90,6 +103,31 @@ No graphics card? The video still renders, at about a second a frame, with this 
 ```bash
 PLAYWRIGHT_BROWSERS_PATH=0 node --import ./examples/m1pro/tools/swgl.mjs engine/capture.mjs m1pro-film --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4
 ```
+
+## Your first scene
+
+The smallest scene in the repo is a cube. The whole idea is the last four lines: draw the frame for time `t`.
+
+```js
+import {runSim} from 'rig/film.js';
+
+runSim({duration: 6, fps: 60}, async ({canvas, capture}) => {
+  // … renderer, scene, camera, one cube (see examples/hello-cube/main.js)
+  return {
+    render(t) {
+      cube.rotation.set(0.45, (t / 6) * Math.PI * 2, 0);
+      renderer.render(scene, camera);
+    },
+  };
+});
+```
+
+```bash
+node engine/build.mjs hello-cube
+node engine/capture.mjs hello-cube --out out/cube.mp4
+```
+
+The M1 Pro example is this same pattern with real parts, motion data and an edit.
 
 ## Use it with Claude
 
