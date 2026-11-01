@@ -10,7 +10,7 @@ import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {buildMouse} from './mouse.js';
 
 const V3 = THREE.Vector3;
-export const COL = {bg: '#efece3', desk: '#e8e4d9', pad: '#34312d', stitch: '#5d5852', shadow: '#0c0e10'};
+export const COL = {bg: '#f4f2ec', desk: '#f0eee6', pad: '#e6e2d6', stitch: '#c4c0b1', shadow: '#0c0e10'};
 export const PAD = {w: 460, d: 380, t: 3};
 
 const PAD_VERT = /* glsl */ `varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }`;
@@ -36,7 +36,7 @@ const PAD_FRAG = /* glsl */ `uniform vec3 uPad; uniform vec3 uStitch; uniform ve
     float far = length(vW.xz - uC.xz);
     col = mix(col, uBg, smoothstep(520.0, 1400.0, far));
     // the studio lights: down to a dark room for the opening
-    col *= mix(0.12, 1.0, uStudio);
+    col *= mix(0.04, 1.0, uStudio);
     // the lit shell's spill through the openings onto the cloth around the mouse
     vec2 gq = (vW.xz - uGlowP.xz) / vec2(62.0, 44.0);
     col += uLime * uGlowA * 0.2 * exp(-dot(gq, gq)) * (0.8 + 0.2 * weave);

@@ -8,7 +8,7 @@ runSim({duration: 6, fps: 60}, async ({canvas, capture}) => {
   renderer.setSize(1600, 900, false);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#efece3');
+  scene.background = new THREE.Color('#f3f1ea');
   const sun = new THREE.DirectionalLight('#ffffff', 3);
   sun.position.set(3, 5, 4);
   scene.add(sun, new THREE.AmbientLight('#ffffff', 0.7));

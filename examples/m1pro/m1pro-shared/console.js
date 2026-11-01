@@ -5,7 +5,7 @@
 // every label says where it came from. update(s) redraws the live parts from the frame's state.
 import {BATTERY, LIFE_LIT, LINK_KEYS, LINKS, SPEC, SWITCH} from './dims.js';
 
-export const C = {ink: '#1f1e1b', mute: '#8b857b', faint: '#dcd6c9', line: '#e7e2d6', panel: 'rgba(252,250,245,.96)', acc: '#d97757', accInk: '#b8512f', dark: '#262421', lime: '#b6e61f', alt: '#3c79a8', flag: '#a8342a'};
+export const C = {ink: '#141413', mute: '#83827d', faint: '#d9d6cb', line: '#e8e6dc', panel: 'rgba(250,249,245,.96)', acc: '#d97757', accInk: '#b8512f', dark: '#262624', lime: '#b6e61f', alt: '#3c79a8', flag: '#a8342a'};
 export const VIEWS = ['hero', 'top', 'side', 'bottom', 'switch', 'wheel', 'sensor'];
 export const VIEW_LABEL = {hero: 'HERO', top: 'TOP', side: 'SIDE', bottom: 'UNDERSIDE', switch: 'SWITCH', wheel: 'WHEEL', sensor: 'SENSOR'};
 export const DISPLAY = ['labels', 'xray', 'section', 'exploded', 'orbit'];
@@ -19,23 +19,23 @@ const CSS = `
 #app{font-family:Inter,system-ui,sans-serif;--serif:'Source Serif 4',Georgia,serif;color:${C.ink};-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 .ui{position:absolute;inset:0;pointer-events:none}
 .mo{font-family:'JetBrains Mono',ui-monospace,monospace}
-.cp{position:absolute;background:${C.panel};border:1px solid ${C.line};border-radius:14px;box-shadow:0 1px 2px rgba(60,45,30,.05),0 8px 24px rgba(60,45,30,.07)}
+.cp{position:absolute;background:${C.panel};border:1px solid ${C.line};border-radius:14px;box-shadow:0 1px 2px rgba(20,20,19,.05),0 8px 24px rgba(20,20,19,.07)}
 .ph{position:absolute;display:flex;align-items:center;gap:9px;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:1.8px}
 .ph i{display:block;width:7px;height:7px;border-radius:50%;background:${C.acc}}
 .pn{position:absolute;font:500 9.5px 'JetBrains Mono',monospace;color:${C.mute};letter-spacing:1px}
 .sm{font:500 9px 'JetBrains Mono',monospace;letter-spacing:1.6px;color:${C.mute};text-transform:uppercase;white-space:nowrap}
 .tier{font:600 7.4px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:${C.mute};border:1px solid ${C.faint};border-radius:2px;padding:1px 3px;margin-left:5px;vertical-align:1px}
-.bt{position:absolute;height:21px;padding:0 8px;display:flex;align-items:center;justify-content:center;border:1px solid ${C.faint};border-radius:8px;background:#fefcf8;font:700 9.2px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:${C.ink};white-space:nowrap}
-.call{position:absolute;white-space:nowrap;background:rgba(252,250,245,.95);padding:3px 8px 4px;border-radius:8px;margin:-3px 0 0 -8px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.bt{position:absolute;height:21px;padding:0 8px;display:flex;align-items:center;justify-content:center;border:1px solid ${C.faint};border-radius:8px;background:#fefdfa;font:700 9.2px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:${C.ink};white-space:nowrap}
+.call{position:absolute;white-space:nowrap;background:rgba(250,249,245,.95);padding:3px 8px 4px;border-radius:8px;margin:-3px 0 0 -8px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
 .call b{display:flex;align-items:center;gap:7px;font:700 9.4px 'JetBrains Mono',monospace;letter-spacing:1.3px;color:${C.ink}}
 .call b em{font-style:normal;color:${C.accInk};font-weight:700;letter-spacing:.6px}
 .call span{display:block;font:500 7.8px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:${C.mute};margin-top:2px;padding-left:23px}
 .grp{position:absolute;inset:0}
 .lean .xtra{display:none}
-.big{position:absolute;left:340px;top:578px;white-space:nowrap;background:${C.panel};border:1px solid ${C.line};border-radius:14px;box-shadow:0 1px 2px rgba(60,45,30,.05),0 10px 28px rgba(60,45,30,.1);padding:14px 20px 15px 18px}
+.big{position:absolute;left:340px;top:578px;white-space:nowrap;background:${C.panel};border:1px solid ${C.line};border-radius:14px;box-shadow:0 1px 2px rgba(20,20,19,.05),0 10px 28px rgba(20,20,19,.1);padding:14px 20px 15px 18px}
 .big b{display:block;font:500 62px var(--serif);letter-spacing:-1.2px;line-height:1;color:${C.ink}}
 .big b small{font-size:24px;letter-spacing:0;margin-left:6px;color:${C.accInk}}
-.big span{display:block;margin-top:9px;font:600 9.6px 'JetBrains Mono',monospace;letter-spacing:1.8px;color:#5e656a}
+.big span{display:block;margin-top:9px;font:600 9.6px 'JetBrains Mono',monospace;letter-spacing:1.8px;color:#5f5e59}
 .big i{display:block;width:34px;height:4px;border-radius:2px;background:${C.acc};margin-bottom:12px}
 .card{position:absolute;white-space:nowrap}
 .cur{position:absolute;left:0;top:0;z-index:50;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
@@ -66,7 +66,7 @@ function drawDim({a, b, lod, h, lodMm, k}) {
   const col = over ? C.alt : C.acc;
   let s = `<g opacity="${o}">`;
   // extension lines from the skate plane and the pad, the dimension between them with its arrowheads
-  for (const p of [a, b]) s += `<line x1="${f1(p[0] - 6)}" y1="${f1(p[1])}" x2="${f1(x - 8)}" y2="${f1(p[1])}" stroke="#7f878b" stroke-width=".8"/>`;
+  for (const p of [a, b]) s += `<line x1="${f1(p[0] - 6)}" y1="${f1(p[1])}" x2="${f1(x - 8)}" y2="${f1(p[1])}" stroke="#85847e" stroke-width=".8"/>`;
   s += `<line x1="${f1(x)}" y1="${f1(a[1])}" x2="${f1(x)}" y2="${f1(b[1])}" stroke="${col}" stroke-width="1.4"/>`;
   const hd = Math.abs(b[1] - a[1]);
   if (hd > 9) for (const [p, dir] of [[a, 1], [b, -1]]) s += `<path d="M${f1(x - 3)} ${f1(p[1] + 6 * dir)} L${f1(x)} ${f1(p[1])} L${f1(x + 3)} ${f1(p[1] + 6 * dir)}" fill="none" stroke="${col}" stroke-width="1.2"/>`;
@@ -74,7 +74,7 @@ function drawDim({a, b, lod, h, lodMm, k}) {
   s += `<line x1="${f1(x - 7)}" y1="${f1(lod[1])}" x2="${f1(x + 7)}" y2="${f1(lod[1])}" stroke="${C.flag}" stroke-width="1.6"/>`;
   s += T(x + 11, lod[1] + 3, `LOD ${lodMm} MM`, `font-size="7.6" font-weight="700" fill="${C.flag}" letter-spacing="1"`);
   const ty = (a[1] + b[1]) / 2;
-  s += `<rect x="${f1(x - 168)}" y="${f1(ty - 19)}" width="156" height="34" rx="8" fill="rgba(252,250,245,.95)"/>`;
+  s += `<rect x="${f1(x - 168)}" y="${f1(ty - 19)}" width="156" height="34" rx="8" fill="rgba(250,249,245,.95)"/>`;
   s += T(x - 160, ty - 4, `LIFT ${h.toFixed(1)} MM`, `font-size="11" font-weight="700" fill="${C.ink}" letter-spacing="1.2"`);
   s += T(x - 160, ty + 9, over ? 'ABOVE THE LOD · NO COUNTS' : 'WITHIN THE LOD · COUNTING', `font-size="7.4" font-weight="600" fill="${col}" letter-spacing="1"`);
   return s + '</g>';
@@ -114,17 +114,17 @@ function drawLoupe(L) {
   if (L.ring > 0) s += `<circle cx="${f1(ax)}" cy="${f1(ay)}" r="${f1(15 + 34 * (1 - L.ring))}" fill="none" stroke="${C.lime}" stroke-width="${f1(1 + 2.5 * L.ring)}" opacity="${(L.ring * 0.95).toFixed(2)}"/>`;
   // the disc
   s += `<defs><clipPath id="lc"><circle cx="150" cy="150" r="${R - 1}"/></clipPath><pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#2e3336"/><line x1="0" y1="0" x2="0" y2="5" stroke="#555c60" stroke-width="1.6"/></pattern></defs>`;
-  s += `<circle cx="${cx}" cy="${cy}" r="${R + 3}" fill="#fbfcfa" stroke="${C.ink}" stroke-width="1.6"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="${R + 3}" fill="#faf9f5" stroke="${C.ink}" stroke-width="1.6"/>`;
   s += `<g transform="translate(${cx - 150} ${cy - 150})"><g clip-path="url(#lc)">`;
-  for (let g = 0; g <= 300; g += 12) s += `<line x1="${g}" y1="0" x2="${g}" y2="300" stroke="#eceee9" stroke-width=".8"/><line x1="0" y1="${g}" x2="300" y2="${g}" stroke="#eceee9" stroke-width=".8"/>`;
+  for (let g = 0; g <= 300; g += 12) s += `<line x1="${g}" y1="0" x2="${g}" y2="300" stroke="#efede5" stroke-width=".8"/><line x1="0" y1="${g}" x2="300" y2="${g}" stroke="#efede5" stroke-width=".8"/>`;
   // housing, cut: hatched walls round a light cavity, an opening in the top for the plunger
-  s += `<rect x="30" y="92" width="240" height="144" rx="6" fill="url(#hatch)"/><rect x="42" y="104" width="216" height="120" fill="#f1f3ef"/><rect x="156" y="88" width="44" height="18" fill="#fbfcfa"/>`;
+  s += `<rect x="30" y="92" width="240" height="144" rx="6" fill="url(#hatch)"/><rect x="42" y="104" width="216" height="120" fill="#f1efe8"/><rect x="156" y="88" width="44" height="18" fill="#faf9f5"/>`;
   // terminals: COM under the blade's root, NO and NC either side of its free end; pins out of the base
   const live = closed ? C.lime : '#6b7276';
-  s += `<rect x="60" y="150" width="12" height="74" fill="${closed ? '#d97757' : '#7b8286'}"/><rect x="62" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#9aa1a5'}"/>`;
-  s += `<rect x="230" y="198" width="12" height="26" fill="${closed ? '#d97757' : '#7b8286'}"/><rect x="232" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#9aa1a5'}"/>`;
-  s += `<rect x="230" y="104" width="12" height="30" fill="#7b8286"/><rect x="146" y="236" width="8" height="30" fill="#9aa1a5"/>`;
-  s += `<circle cx="236" cy="138" r="4.5" fill="#c9cdd0" stroke="#5d6468"/><circle cx="236" cy="194" r="4.5" fill="${closed ? C.lime : '#c9cdd0'}" stroke="#5d6468"/>`;
+  s += `<rect x="60" y="150" width="12" height="74" fill="${closed ? '#d97757' : '#85847e'}"/><rect x="62" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#a09e96'}"/>`;
+  s += `<rect x="230" y="198" width="12" height="26" fill="${closed ? '#d97757' : '#85847e'}"/><rect x="232" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#a09e96'}"/>`;
+  s += `<rect x="230" y="104" width="12" height="30" fill="#85847e"/><rect x="146" y="236" width="8" height="30" fill="#a09e96"/>`;
+  s += `<circle cx="236" cy="138" r="4.5" fill="#cfcdc4" stroke="#5d5c57"/><circle cx="236" cy="194" r="4.5" fill="${closed ? C.lime : '#cfcdc4'}" stroke="#5d5c57"/>`;
   // the blade: root on COM at (66, 146), pressed down in the middle by the plunger, free end on NC or NO
   const tipY = 146 + 40 * L.snap;
   const midY = Math.max(146 + (tipY - 146) * (112 / 170), 146 + P);
@@ -150,7 +150,7 @@ function drawLoupe(L) {
   s += T(56, 280, 'COM', `font-size="7.2" font-weight="700" fill="${C.mute}"`) + T(143, 280, 'NC', `font-size="7.2" font-weight="700" fill="${C.mute}"`) + T(229, 280, 'NO', `font-size="7.2" font-weight="700" fill="${C.mute}"`);
   s += `</g></g>`;
   // header above the disc on its own plate, slow-motion badge
-  s += `<rect x="${cx - R - 10}" y="${cy - R - 50}" width="${2 * R + 20}" height="40" rx="10" fill="rgba(252,250,245,.95)" stroke="${C.line}"/>`;
+  s += `<rect x="${cx - R - 10}" y="${cy - R - 50}" width="${2 * R + 20}" height="40" rx="10" fill="rgba(250,249,245,.95)" stroke="${C.line}"/>`;
   s += T(cx - R, cy - R - 34, 'DETAIL · OMRON D2FC · SCHEMATIC', `font-size="8.4" font-weight="700" fill="${C.ink}" letter-spacing="1.1"`);
   s += T(cx - R, cy - R - 20, `TRAVEL ${L.p.toFixed(2)} MM · ${closed ? 'CONTACT CLOSED (NO)' : 'OPEN'}`, `font-size="8" font-weight="600" fill="${closed ? C.acc : C.mute}" letter-spacing="1"`);
   if (L.rate < 0.9) {
@@ -165,7 +165,7 @@ function drawLoupe(L) {
   const GH = 70;
   const X = (p) => gx + (p / 0.6) * GW;
   const Y = (f) => gy + GH - (f / 0.8) * GH;
-  s += `<rect x="${gx - 8}" y="${gy - 16}" width="${GW + 16}" height="${GH + 40}" rx="10" fill="rgba(252,250,245,.95)" stroke="${C.line}"/>`;
+  s += `<rect x="${gx - 8}" y="${gy - 16}" width="${GW + 16}" height="${GH + 40}" rx="10" fill="rgba(250,249,245,.95)" stroke="${C.line}"/>`;
   s += T(gx, gy - 4, 'FORCE AT THE PLUNGER (N) · TRAVEL (MM)', `font-size="7.2" font-weight="700" fill="${C.ink}" letter-spacing="1"`);
   let pp = '';
   for (let i = 0; i <= 60; i++) {
@@ -221,7 +221,7 @@ export function createConsole(app) {
   add(`<div class="mo" style="position:absolute;left:76px;top:54px;color:${C.acc};font-size:9px;font-weight:600;letter-spacing:3px">PRO</div>`);
   add(`<div class="sm" style="position:absolute;left:182px;top:22px;letter-spacing:2.4px">WIRELESS GAMING MOUSE</div>`);
   add(`<div style="position:absolute;left:181px;top:37px;font:500 35px var(--serif);letter-spacing:-.6px;line-height:1">GravaStar Mercury M1 Pro <span style="color:${C.acc};font-weight:400">/</span></div>`);
-  add(`<div class="mo" style="position:absolute;left:182px;top:77px;font-size:11.2px;letter-spacing:2.2px;color:#5e656a">GUNMETAL GRAY / TEARDOWN · SENSOR TO REPORT</div>`);
+  add(`<div class="mo" style="position:absolute;left:182px;top:77px;font-size:11.2px;letter-spacing:2.2px;color:#5f5e59">GUNMETAL GRAY / TEARDOWN · SENSOR TO REPORT</div>`);
   add(`<div class="sm xtra" style="position:absolute;left:1046px;top:49px;letter-spacing:2.6px;font-size:9.6px">MAGNESIUM SKELETON · PAW3395 · nRF52833</div>`);
   add(`<div class="xtra" style="position:absolute;left:1386px;top:34px;color:${C.accInk};font:500 42px var(--serif);letter-spacing:-.6px;line-height:1">88<span style="font-size:20px">G</span></div>`);
   add(`<div class="xtra" style="position:absolute;left:1488px;top:33px;width:1px;height:44px;background:${C.faint}"></div>`);
@@ -237,7 +237,7 @@ export function createConsole(app) {
   const bars = ROWS.map(([n, lim], i) => {
     const y = 214 + i * 24;
     add(`<div class="sm" style="position:absolute;left:42px;top:${y}px">${n}</div>`);
-    add(`<div style="position:absolute;left:100px;top:${y + 4}px;width:104px;height:4px;background:#e8ebe5;border-radius:2px"></div>`);
+    add(`<div style="position:absolute;left:100px;top:${y + 4}px;width:104px;height:4px;background:#e8e6dc;border-radius:2px"></div>`);
     const f = add(`<div style="position:absolute;left:100px;top:${y + 4}px;height:4px;background:${C.acc};border-radius:2px"></div>`);
     const v = add(`<div class="mo" style="position:absolute;right:${1600 - 296}px;top:${y - 2}px;font-size:11px;font-weight:600"></div>`);
     add(`<div class="sm" style="position:absolute;left:100px;top:${y + 10}px;font-size:7px;letter-spacing:1px">${lim}</div>`);
@@ -251,7 +251,7 @@ export function createConsole(app) {
   panel(28, 354, 282, 196, 'REPORT STREAM', '02');
   const rpHead = add(`<div class="mo" style="position:absolute;left:42px;top:388px;font-size:10px;font-weight:700;letter-spacing:1.3px"></div>`);
   const rpChart = add(`<svg style="position:absolute;left:42px;top:406px" width="254" height="78"></svg>`);
-  const rpCmp = add(`<div class="mo" style="position:absolute;left:42px;top:492px;width:254px;font-size:9px;line-height:15px;color:#4d5458"></div>`);
+  const rpCmp = add(`<div class="mo" style="position:absolute;left:42px;top:492px;width:254px;font-size:9px;line-height:15px;color:#4d4c48"></div>`);
   add(`<div class="sm" style="position:absolute;left:42px;top:530px;font-size:7.6px;letter-spacing:1.1px">WORST CASE 650 IPS × 26K CPI = 16,900 / 1K REPORT · FITS INT16</div>`);
 
   // ------------------------------------------------------------ 03 switch and wheel
@@ -276,7 +276,7 @@ export function createConsole(app) {
   // ------------------------------------------------------------ 05 gesture, 06 link · dpi, 07 views, 08 display
   const btn = {};
   panel(1313, 308, 258, 82, 'GESTURE', '05');
-  add(`<div style="position:absolute;left:1327px;top:345px;width:230px;height:30px;border-radius:5px;background:#e9ece6"></div>`);
+  add(`<div style="position:absolute;left:1327px;top:345px;width:230px;height:30px;border-radius:5px;background:#e8e6dc"></div>`);
   SEQS.forEach((k, i) => {
     btn[k] = add(`<div class="bt" style="left:${1330 + i * 75.3}px;top:348px;width:74px;height:24px;border:none;background:transparent">${k.toUpperCase()}</div>`);
   });
@@ -314,13 +314,13 @@ export function createConsole(app) {
     const y = 800 + i * 15;
     const L = LINKS[k];
     add(`<div class="mo" style="position:absolute;left:42px;top:${y}px;font-size:9.4px;font-weight:700;letter-spacing:1px">${LINK_LABEL[k]}</div>`);
-    add(`<div class="mo" style="position:absolute;left:74px;top:${y}px;font-size:9.4px;color:#4d5458">${L.life} H</div>`);
-    add(`<div style="position:absolute;left:122px;top:${y + 4}px;width:150px;height:4px;background:#e8ebe5;border-radius:2px"></div>`);
+    add(`<div class="mo" style="position:absolute;left:74px;top:${y}px;font-size:9.4px;color:#4d4c48">${L.life} H</div>`);
+    add(`<div style="position:absolute;left:122px;top:${y + 4}px;width:150px;height:4px;background:#e8e6dc;border-radius:2px"></div>`);
     pw[k] = add(`<div style="position:absolute;left:122px;top:${y + 4}px;height:4px;border-radius:2px;width:${((BATTERY.mAh / L.life) / 12) * 150}px;background:${C.acc}"></div>`);
     add(`<div class="mo" style="position:absolute;left:282px;top:${y}px;font-size:9.4px;font-weight:700">${(BATTERY.mAh / L.life).toFixed(2)} mA</div>`);
     add(`<div class="mo" style="position:absolute;left:346px;top:${y}px;font-size:8.6px;color:${C.mute}">${(BATTERY.alt / L.life).toFixed(2)}</div>`);
   });
-  add(`<div class="sm" style="position:absolute;left:42px;top:846px;font-size:6.8px;letter-spacing:.8px;color:#a2a8ac">LIGHTS ON (GRAVASTAR.DE, FLAGGED): 1K ${LIFE_LIT.k1} H · BT ${LIFE_LIT.bt} H · 4K ${LIFE_LIT.k4} H</div>`);
+  add(`<div class="sm" style="position:absolute;left:42px;top:846px;font-size:6.8px;letter-spacing:.8px;color:#a8a69d">LIGHTS ON (GRAVASTAR.DE, FLAGGED): 1K ${LIFE_LIT.k1} H · BT ${LIFE_LIT.bt} H · 4K ${LIFE_LIT.k4} H</div>`);
 
   // ------------------------------------------------------------ 10 gesture timeline
   panel(430, 752, 740, 108, 'GESTURE TIMELINE', '10');
@@ -329,13 +329,13 @@ export function createConsole(app) {
   const opPhase = add(`<div class="mo" style="position:absolute;left:506px;width:500px;top:790px;text-align:center;font-size:9.6px;font-weight:700;letter-spacing:1.6px;color:${C.acc}"></div>`);
   const opTo = add(`<div class="sm" style="position:absolute;right:${1600 - 1010}px;top:791px"></div>`);
   const TL = {x: 508, w: 504};
-  add(`<div style="position:absolute;left:${TL.x}px;top:820px;width:${TL.w}px;height:3px;background:#e8ebe5;border-radius:2px"></div>`);
+  add(`<div style="position:absolute;left:${TL.x}px;top:820px;width:${TL.w}px;height:3px;background:#e8e6dc;border-radius:2px"></div>`);
   const tlFill = add(`<div style="position:absolute;left:${TL.x}px;top:820px;height:3px;background:${C.acc};border-radius:2px"></div>`);
   const tlKnob = add(`<div style="position:absolute;top:814px;width:15px;height:15px;margin-left:-7.5px;border-radius:50%;background:#fff;border:2px solid ${C.acc};box-sizing:border-box"></div>`);
   const tlTime = add(`<div class="mo" style="position:absolute;left:506px;top:834px;font-size:9.6px;color:${C.mute};letter-spacing:1px"></div>`);
   add(`<div class="sm" style="position:absolute;left:1029px;top:805px">SPEED</div>`);
   const SP = {x: 1031, w: 92};
-  add(`<div style="position:absolute;left:${SP.x}px;top:823px;width:${SP.w}px;height:3px;background:#e8ebe5;border-radius:2px"></div>`);
+  add(`<div style="position:absolute;left:${SP.x}px;top:823px;width:${SP.w}px;height:3px;background:#e8e6dc;border-radius:2px"></div>`);
   const spFill = add(`<div style="position:absolute;left:${SP.x}px;top:823px;height:3px;background:${C.acc};border-radius:2px"></div>`);
   const spKnob = add(`<div style="position:absolute;top:817px;width:15px;height:15px;margin-left:-7.5px;border-radius:50%;background:#fff;border:2px solid ${C.acc};box-sizing:border-box"></div>`);
   const spVal = add(`<div class="mo" style="position:absolute;left:1128px;top:818px;font-size:10px;font-weight:700"></div>`);
@@ -370,9 +370,9 @@ export function createConsole(app) {
   const dimSvg = add(`<svg style="position:absolute;inset:0;overflow:visible" width="1600" height="900"></svg>`);
   const titleCard = add(`<div class="card" style="left:118px;top:318px">
     <div class="mo" style="font-size:12px;font-weight:700;letter-spacing:4px;color:${C.lime}">GRAVASTAR · WIRELESS GAMING MOUSE</div>
-    <div style="margin-top:16px;font:500 88px var(--serif);letter-spacing:-2px;line-height:.98;color:#f6f2e9">Mercury<br>M1 Pro</div>
+    <div style="margin-top:16px;font:500 88px var(--serif);letter-spacing:-2px;line-height:.98;color:#f5f3ec">Mercury<br>M1 Pro</div>
     <div style="margin-top:22px;width:44px;height:3px;background:${C.lime}"></div>
-    <div class="mo" style="margin-top:16px;font-size:11.5px;letter-spacing:2.6px;color:#9aa2a6">GUNMETAL GRAY · MAGNESIUM SKELETON · 88 G</div>
+    <div class="mo" style="margin-top:16px;font-size:11.5px;letter-spacing:2.6px;color:#a09e96">GUNMETAL GRAY · MAGNESIUM SKELETON · 88 G</div>
     <div class="mo" style="margin-top:7px;font-size:11.5px;letter-spacing:2.6px;color:#6f777b">A TEARDOWN, FROM THE SENSOR TO THE REPORT</div></div>`);
   const endCard = add(`<div class="card" style="left:96px;top:196px;background:${C.panel};border:1px solid ${C.line};border-radius:8px;box-shadow:0 4px 22px rgba(30,40,30,.14);padding:38px 46px 34px">
     <div class="mo" style="font-size:11.5px;font-weight:700;letter-spacing:4px;color:${C.accInk}">GRAVASTAR · GUNMETAL GRAY</div>
@@ -410,7 +410,7 @@ export function createConsole(app) {
   const fmtT = (s) => `${s.toFixed(2)} S`;
   const onBtn = (k, on) => {
     if (!btn[k]) return;
-    btn[k].style.background = on ? C.acc : '#fdfdfb';
+    btn[k].style.background = on ? C.acc : '#fefdfa';
     btn[k].style.color = on ? '#fff' : C.ink;
     btn[k].style.borderColor = on ? C.acc : C.faint;
   };
@@ -503,7 +503,7 @@ export function createConsole(app) {
       for (const k of SEQS) {
         const on = s.seq === k;
         btn[k].style.background = on ? C.acc : 'transparent';
-        btn[k].style.color = on ? '#fff' : '#7f878c';
+        btn[k].style.color = on ? '#fff' : '#85847e';
         btn[k].style.borderRadius = '4px';
       }
       for (const k of LINK_KEYS) onBtn('link_' + k, s.link === k);
@@ -541,7 +541,7 @@ export function createConsole(app) {
         const ex = right ? lx - 8 : lx + c.w - 8;
         const kx = ex + (right ? -18 : 18);
         const o = c.o.toFixed(2);
-        lh += `<polyline points="${ax.toFixed(1)},${ay.toFixed(1)} ${kx.toFixed(1)},${(ly + 6).toFixed(1)} ${ex.toFixed(1)},${(ly + 6).toFixed(1)}" fill="none" stroke="#7f878b" stroke-width=".85" opacity="${o}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="3.2" fill="#fff" opacity="${o}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="2.1" fill="${C.acc}" opacity="${o}"/>`;
+        lh += `<polyline points="${ax.toFixed(1)},${ay.toFixed(1)} ${kx.toFixed(1)},${(ly + 6).toFixed(1)} ${ex.toFixed(1)},${(ly + 6).toFixed(1)}" fill="none" stroke="#85847e" stroke-width=".85" opacity="${o}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="3.2" fill="#fff" opacity="${o}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="2.1" fill="${C.acc}" opacity="${o}"/>`;
         ch += `<div class="call" style="left:${lx.toFixed(1)}px;top:${(ly - 1).toFixed(1)}px;width:${c.w}px;box-sizing:border-box;opacity:${o}"><b><em>${c.n}</em>${c.name}</b><span>${c.sub}</span></div>`;
       }
       callSvg.innerHTML = lh;
