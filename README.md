@@ -1,70 +1,73 @@
 # 3D Product Visualization
 
-An interactive 3D teardown of the **GravaStar Mercury M1 Pro** gaming mouse: pull it apart, section the sensor, slow the click down to watch the switch snap. One offline HTML page you can drive, plus a 57 s, 60 fps film with its own generated score.
+Turn a real product into an **interactive 3D explainer and a 60 fps launch-style film**, from one codebase.
 
-![Preview](media/preview.gif)
+You describe the product's parts, motions and the story you want to tell. The kit gives you:
 
-**Watch the full film:** [media/m1pro-film.mp4](media/m1pro-film.mp4) (1080p60, with sound; use QuickTime, VLC or a browser, since some editors' previews play it silent).
+- **a live page**: one offline HTML file where the product runs, comes apart, opens to a cutaway, and tours itself until you touch it;
+- **a film**: the same scene rendered frame by frame to 1080p60, with speed ramps, camera cuts, labels and callouts;
+- **a score**: procedural sound timed from the film itself, so every click, move and cut lands on the beat, mastered to −14 LUFS.
 
-## What it shows
+Because the picture is a pure function of time, the page, the film and the sound can never drift apart.
 
-| | |
+## Why use it
+
+| You want | You get |
 |---|---|
-| Hook | a 4K-report flick, then the parts lifting apart with numbered labels |
-| Walkthrough | sensor cutaway with the lift-off distance, the Omron switch closing at 0.30 mm in 20× slow motion, scroll wheel detents, the underside and its 4 kHz receiver |
-| Sound | every click, flick and cut is timed from the film itself, mastered to −14 LUFS |
-| Numbers | real values where they are public; anything assumed is labelled on screen |
+| To show how something works, not just how it looks | exploded views, section cutaways, slow-motion on the one moment that matters |
+| A shareable demo | a single HTML file under 1 MB, no server, works offline |
+| A launch-style video | deterministic frame capture, no screen recording, repeatable edits |
+| Honest specs | every number on screen is real or labelled as assumed |
 
-## Run it
+## Example: GravaStar Mercury M1 Pro
 
-Needs Node.js 20+. For the film you also need `ffmpeg`; for the sound, Python 3.
+The included example is a gaming mouse: 4K-report flick, exploded layers, sensor cutaway, and the switch closing at 0.30 mm in 20× slow motion.
+
+![Example film preview](media/preview.gif)
+
+[Watch the full film](media/m1pro-film.mp4) (1080p60 with sound; play in QuickTime, VLC or a browser, as some editor previews play it silent).
+
+## Quick start
+
+Needs Node.js 20+. The film also needs `ffmpeg`; the score needs Python 3.
 
 ```bash
 git clone https://github.com/Vedmeena21/3D-product-visualization
 cd 3D-product-visualization
-npm run setup        # installs three.js, esbuild, Playwright + Chromium into engine/
-npm run build        # -> teardown-out/dist/m1pro-live.html, m1pro-film.html
+npm run setup        # three.js, esbuild, Playwright + Chromium, installed into engine/
+npm run build        # -> teardown-out/dist/*.html
 ```
 
-Open `teardown-out/dist/m1pro-live.html` in a browser. It tours itself; touch anything and it is yours.
-
-### Make the film
+Open `teardown-out/dist/m1pro-live.html`. Then render the film:
 
 ```bash
-npm run timeline     # reads the edit, writes the cue times the score uses
-npm run score        # -> teardown-out/m1pro-score.wav
-npm run film         # frame-by-frame capture -> teardown-out/m1pro-silent.mp4
+npm run timeline && npm run score && npm run film
 ffmpeg -i teardown-out/m1pro-silent.mp4 -i teardown-out/m1pro-score.wav -c:v copy -c:a aac -shortest teardown-out/m1pro.mp4
 ```
 
-No GPU (CI, some sandboxes)? Software rendering works but takes about a second a frame: `node --import ./examples/m1pro/tools/swgl.mjs engine/sims/capture.mjs ...`.
+No GPU? Software rendering works at about a second a frame (see [docs/make-your-own.md](docs/make-your-own.md)).
 
-## Make one for your own product
+## Make one for your product
 
-Short version; the full one is in [docs/make-your-own.md](docs/make-your-own.md).
+1. **Copy** `examples/m1pro/` to `examples/<product>/`.
+2. **Model** the parts in real millimetres, grouped by layer.
+3. **Describe motion** as data: what moves, how far, when.
+4. **Write the edit** as a timed script: cuts on the music's bars, one idea per shot.
+5. **Build, look at stills, fix**, then cue sheet, score, film.
 
-1. Copy `examples/m1pro/` to `examples/<product>/` and rename the folders to match.
-2. In `shared/mouse.js`, replace the parts with your product's, in real millimetres.
-3. In `shared/model.js`, describe the motions (gestures) as data.
-4. In `shared/film.js`, edit the `SCRIPT`: cuts on bars, one idea per shot.
-5. `npm run build`, look at stills, fix, repeat. Then timeline, score, film.
+Details and rules of thumb: [docs/make-your-own.md](docs/make-your-own.md). How the pieces fit: [docs/how-it-works.md](docs/how-it-works.md).
 
 ## Layout
 
 ```
 .
-├── README.md  LICENSE  NOTICE.md  package.json
-├── media/                 film, poster, preview
-├── docs/                  how it works, make your own
-├── examples/m1pro/
-│   ├── m1pro-shared/      the product: mouse.js, skin.js, model.js, film.js, live.js, console.js, stage.js, score.py
-│   ├── m1pro-live/        the page you drive
-│   ├── m1pro-film/        the recorded tour (+ timeline.json)
-│   ├── m1pro-film-lite/   lighter variant
-│   └── tools/             timeline.mjs, swgl.mjs
-└── engine/                the page runtime, builder, frame capture and sound engine (see NOTICE.md)
+├── engine/              runtime, builder, frame capture, sound engine (reusable for any product)
+├── examples/m1pro/      the worked example: model, motion, edit, overlay, score
+├── docs/                how it works, make your own
+├── media/               example film, poster, preview
+└── NOTICE.md  LICENSE
 ```
 
 ## Credits and licence
 
-The M1 Pro model, edit, console and score are mine. The runtime, capture and sound engine in `engine/` come from the MIT-licensed [teardown](https://github.com/elvarofficial/teardown) kit and [claude-motion](https://github.com/whaleyxbt/claude-motion); see [NOTICE.md](NOTICE.md). MIT licence. Unofficial fan study, not affiliated with GravaStar.
+MIT. The example, docs and structure are original to this repo; `engine/` builds on the MIT-licensed [teardown](https://github.com/elvarofficial/teardown) kit and [claude-motion](https://github.com/whaleyxbt/claude-motion), and keeps their notice (see [NOTICE.md](NOTICE.md)). The M1 Pro example is an unofficial fan study, not affiliated with GravaStar.

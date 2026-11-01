@@ -1,6 +1,6 @@
 # How it works
 
-One idea runs through the whole repo: **the picture is a pure function of time**. `render(t)` takes a number and draws a frame, with no hidden state. That is why the live page, the film and the score always agree.
+Whatever the product, one idea runs through the whole repo: **the picture is a pure function of time**. `render(t)` takes a number and draws a frame, with no hidden state. That is why the live page, the film and the score always agree.
 
 | Piece | File | Job |
 |---|---|---|

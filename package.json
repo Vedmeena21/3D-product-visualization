@@ -2,7 +2,7 @@
   "name": "3d-product-visualization",
   "version": "1.0.0",
   "private": true,
-  "description": "An interactive 3D teardown of a gaming mouse, with a 60 fps film and procedural score, and the steps to make one for any product.",
+  "description": "Turn a real product into an interactive 3D explainer page and a 60 fps film with a procedural score. Worked example: a gaming mouse.",
   "license": "MIT",
   "scripts": {
     "setup": "cd engine && npm install && npx playwright install chromium",
