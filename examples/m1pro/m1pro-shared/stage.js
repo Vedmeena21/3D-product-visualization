@@ -10,7 +10,7 @@ import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {buildMouse} from './mouse.js';
 
 const V3 = THREE.Vector3;
-export const COL = {bg: '#e9ebe6', desk: '#e2e4de', pad: '#33373a', stitch: '#5a5f63', shadow: '#0c0e10'};
+export const COL = {bg: '#efece3', desk: '#e8e4d9', pad: '#34312d', stitch: '#5d5852', shadow: '#0c0e10'};
 export const PAD = {w: 460, d: 380, t: 3};
 
 const PAD_VERT = /* glsl */ `varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }`;

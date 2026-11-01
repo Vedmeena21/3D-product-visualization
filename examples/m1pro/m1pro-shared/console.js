@@ -5,7 +5,7 @@
 // every label says where it came from. update(s) redraws the live parts from the frame's state.
 import {BATTERY, LIFE_LIT, LINK_KEYS, LINKS, SPEC, SWITCH} from './dims.js';
 
-export const C = {ink: '#1f2326', mute: '#899095', faint: '#d2d6d1', line: '#e2e5df', panel: 'rgba(250,251,248,.95)', acc: '#4b8410', dark: '#202427', lime: '#b6e61f', alt: '#3c79a8', flag: '#c2552f'};
+export const C = {ink: '#1f1e1b', mute: '#8b857b', faint: '#dcd6c9', line: '#e7e2d6', panel: 'rgba(252,250,245,.96)', acc: '#d97757', accInk: '#b8512f', dark: '#262421', lime: '#b6e61f', alt: '#3c79a8', flag: '#a8342a'};
 export const VIEWS = ['hero', 'top', 'side', 'bottom', 'switch', 'wheel', 'sensor'];
 export const VIEW_LABEL = {hero: 'HERO', top: 'TOP', side: 'SIDE', bottom: 'UNDERSIDE', switch: 'SWITCH', wheel: 'WHEEL', sensor: 'SENSOR'};
 export const DISPLAY = ['labels', 'xray', 'section', 'exploded', 'orbit'];
@@ -16,26 +16,27 @@ export const PANELS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10
 const BUILD = ['head', '01', '04', '02', '05', '03', '06', '07', '08', '09', '10', '11', 'foot'];
 const LINK_LABEL = {k1: '1K', k4: '4K', bt: 'BT', usb: 'USB'};
 const CSS = `
-#app{font-family:Inter,system-ui,sans-serif;color:${C.ink};-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+#app{font-family:Inter,system-ui,sans-serif;--serif:'Source Serif 4',Georgia,serif;color:${C.ink};-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 .ui{position:absolute;inset:0;pointer-events:none}
 .mo{font-family:'JetBrains Mono',ui-monospace,monospace}
-.cp{position:absolute;background:${C.panel};border:1px solid ${C.line};border-radius:6px;box-shadow:0 2px 10px rgba(40,50,40,.07)}
+.cp{position:absolute;background:${C.panel};border:1px solid ${C.line};border-radius:14px;box-shadow:0 1px 2px rgba(60,45,30,.05),0 8px 24px rgba(60,45,30,.07)}
 .ph{position:absolute;display:flex;align-items:center;gap:9px;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:1.8px}
-.ph i{display:block;width:3px;height:13px;background:${C.acc}}
+.ph i{display:block;width:7px;height:7px;border-radius:50%;background:${C.acc}}
 .pn{position:absolute;font:500 9.5px 'JetBrains Mono',monospace;color:${C.mute};letter-spacing:1px}
 .sm{font:500 9px 'JetBrains Mono',monospace;letter-spacing:1.6px;color:${C.mute};text-transform:uppercase;white-space:nowrap}
 .tier{font:600 7.4px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:${C.mute};border:1px solid ${C.faint};border-radius:2px;padding:1px 3px;margin-left:5px;vertical-align:1px}
-.bt{position:absolute;height:21px;padding:0 8px;display:flex;align-items:center;justify-content:center;border:1px solid ${C.faint};border-radius:4px;background:#fdfdfb;font:700 9.2px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:${C.ink};white-space:nowrap}
-.call{position:absolute;white-space:nowrap;background:rgba(250,251,248,.94);padding:3px 8px 4px;border-radius:3px;margin:-3px 0 0 -8px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.bt{position:absolute;height:21px;padding:0 8px;display:flex;align-items:center;justify-content:center;border:1px solid ${C.faint};border-radius:8px;background:#fefcf8;font:700 9.2px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:${C.ink};white-space:nowrap}
+.call{position:absolute;white-space:nowrap;background:rgba(252,250,245,.95);padding:3px 8px 4px;border-radius:8px;margin:-3px 0 0 -8px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
 .call b{display:flex;align-items:center;gap:7px;font:700 9.4px 'JetBrains Mono',monospace;letter-spacing:1.3px;color:${C.ink}}
-.call b em{font-style:normal;color:${C.acc};font-weight:700;letter-spacing:.6px}
+.call b em{font-style:normal;color:${C.accInk};font-weight:700;letter-spacing:.6px}
 .call span{display:block;font:500 7.8px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:${C.mute};margin-top:2px;padding-left:23px}
 .grp{position:absolute;inset:0}
-.big{position:absolute;left:340px;top:578px;white-space:nowrap;background:${C.panel};border:1px solid ${C.line};border-radius:6px;box-shadow:0 2px 10px rgba(40,50,40,.1);padding:14px 20px 15px 18px}
-.big b{display:block;font:700 58px Inter,system-ui,sans-serif;letter-spacing:-1.6px;line-height:1;color:${C.ink}}
-.big b small{font-size:22px;letter-spacing:0;margin-left:6px;color:${C.acc}}
+.lean .xtra{display:none}
+.big{position:absolute;left:340px;top:578px;white-space:nowrap;background:${C.panel};border:1px solid ${C.line};border-radius:14px;box-shadow:0 1px 2px rgba(60,45,30,.05),0 10px 28px rgba(60,45,30,.1);padding:14px 20px 15px 18px}
+.big b{display:block;font:500 62px var(--serif);letter-spacing:-1.2px;line-height:1;color:${C.ink}}
+.big b small{font-size:24px;letter-spacing:0;margin-left:6px;color:${C.accInk}}
 .big span{display:block;margin-top:9px;font:600 9.6px 'JetBrains Mono',monospace;letter-spacing:1.8px;color:#5e656a}
-.big i{display:block;width:34px;height:3px;background:${C.acc};margin-bottom:12px}
+.big i{display:block;width:34px;height:4px;border-radius:2px;background:${C.acc};margin-bottom:12px}
 .card{position:absolute;white-space:nowrap}
 .cur{position:absolute;left:0;top:0;z-index:50;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
 .ring{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:1.5px solid ${C.acc};opacity:0;z-index:49}
@@ -73,7 +74,7 @@ function drawDim({a, b, lod, h, lodMm, k}) {
   s += `<line x1="${f1(x - 7)}" y1="${f1(lod[1])}" x2="${f1(x + 7)}" y2="${f1(lod[1])}" stroke="${C.flag}" stroke-width="1.6"/>`;
   s += T(x + 11, lod[1] + 3, `LOD ${lodMm} MM`, `font-size="7.6" font-weight="700" fill="${C.flag}" letter-spacing="1"`);
   const ty = (a[1] + b[1]) / 2;
-  s += `<rect x="${f1(x - 168)}" y="${f1(ty - 19)}" width="156" height="34" rx="3" fill="rgba(250,251,248,.94)"/>`;
+  s += `<rect x="${f1(x - 168)}" y="${f1(ty - 19)}" width="156" height="34" rx="8" fill="rgba(252,250,245,.95)"/>`;
   s += T(x - 160, ty - 4, `LIFT ${h.toFixed(1)} MM`, `font-size="11" font-weight="700" fill="${C.ink}" letter-spacing="1.2"`);
   s += T(x - 160, ty + 9, over ? 'ABOVE THE LOD · NO COUNTS' : 'WITHIN THE LOD · COUNTING', `font-size="7.4" font-weight="600" fill="${col}" letter-spacing="1"`);
   return s + '</g>';
@@ -120,8 +121,8 @@ function drawLoupe(L) {
   s += `<rect x="30" y="92" width="240" height="144" rx="6" fill="url(#hatch)"/><rect x="42" y="104" width="216" height="120" fill="#f1f3ef"/><rect x="156" y="88" width="44" height="18" fill="#fbfcfa"/>`;
   // terminals: COM under the blade's root, NO and NC either side of its free end; pins out of the base
   const live = closed ? C.lime : '#6b7276';
-  s += `<rect x="60" y="150" width="12" height="74" fill="${closed ? '#9cc417' : '#7b8286'}"/><rect x="62" y="236" width="8" height="30" fill="${closed ? '#9cc417' : '#9aa1a5'}"/>`;
-  s += `<rect x="230" y="198" width="12" height="26" fill="${closed ? '#9cc417' : '#7b8286'}"/><rect x="232" y="236" width="8" height="30" fill="${closed ? '#9cc417' : '#9aa1a5'}"/>`;
+  s += `<rect x="60" y="150" width="12" height="74" fill="${closed ? '#d97757' : '#7b8286'}"/><rect x="62" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#9aa1a5'}"/>`;
+  s += `<rect x="230" y="198" width="12" height="26" fill="${closed ? '#d97757' : '#7b8286'}"/><rect x="232" y="236" width="8" height="30" fill="${closed ? '#d97757' : '#9aa1a5'}"/>`;
   s += `<rect x="230" y="104" width="12" height="30" fill="#7b8286"/><rect x="146" y="236" width="8" height="30" fill="#9aa1a5"/>`;
   s += `<circle cx="236" cy="138" r="4.5" fill="#c9cdd0" stroke="#5d6468"/><circle cx="236" cy="194" r="4.5" fill="${closed ? C.lime : '#c9cdd0'}" stroke="#5d6468"/>`;
   // the blade: root on COM at (66, 146), pressed down in the middle by the plunger, free end on NC or NO
@@ -138,7 +139,7 @@ function drawLoupe(L) {
   for (let i = 0; i <= 6; i++) s += `<line x1="${RX - (i % 3 ? 3 : 6)}" y1="${f1(146 + i * 0.1 * TS)}" x2="${RX}" y2="${f1(146 + i * 0.1 * TS)}" stroke="${C.ink}" stroke-width=".8"/>`;
   s += `<line x1="${RX - 9}" y1="${f1(146 + SWITCH.pt * TS)}" x2="${RX + 16}" y2="${f1(146 + SWITCH.pt * TS)}" stroke="${C.acc}" stroke-width="1.3"/>`;
   s += `<line x1="${RX - 9}" y1="${f1(146 + rp * TS)}" x2="${RX + 16}" y2="${f1(146 + rp * TS)}" stroke="${C.alt}" stroke-width="1.3" stroke-dasharray="2 2"/>`;
-  s += T(RX - 11, 146 + SWITCH.pt * TS + 3, 'CLOSES 0.30', `font-size="7" font-weight="700" fill="${C.acc}" text-anchor="end"`);
+  s += T(RX - 11, 146 + SWITCH.pt * TS + 3, 'CLOSES 0.30', `font-size="7" font-weight="700" fill="${C.accInk}" text-anchor="end"`);
   s += T(RX - 11, 146 + rp * TS + 1, 'OPENS 0.18', `font-size="7" font-weight="700" fill="${C.alt}" text-anchor="end"`);
   s += `<path d="M${RX + 1} ${f1(146 + P)} l7 -4 v8 z" fill="${C.ink}"/>`;
   // names
@@ -149,7 +150,7 @@ function drawLoupe(L) {
   s += T(56, 280, 'COM', `font-size="7.2" font-weight="700" fill="${C.mute}"`) + T(143, 280, 'NC', `font-size="7.2" font-weight="700" fill="${C.mute}"`) + T(229, 280, 'NO', `font-size="7.2" font-weight="700" fill="${C.mute}"`);
   s += `</g></g>`;
   // header above the disc on its own plate, slow-motion badge
-  s += `<rect x="${cx - R - 10}" y="${cy - R - 50}" width="${2 * R + 20}" height="40" rx="4" fill="rgba(250,251,248,.95)" stroke="${C.line}"/>`;
+  s += `<rect x="${cx - R - 10}" y="${cy - R - 50}" width="${2 * R + 20}" height="40" rx="10" fill="rgba(252,250,245,.95)" stroke="${C.line}"/>`;
   s += T(cx - R, cy - R - 34, 'DETAIL · OMRON D2FC · SCHEMATIC', `font-size="8.4" font-weight="700" fill="${C.ink}" letter-spacing="1.1"`);
   s += T(cx - R, cy - R - 20, `TRAVEL ${L.p.toFixed(2)} MM · ${closed ? 'CONTACT CLOSED (NO)' : 'OPEN'}`, `font-size="8" font-weight="600" fill="${closed ? C.acc : C.mute}" letter-spacing="1"`);
   if (L.rate < 0.9) {
@@ -164,7 +165,7 @@ function drawLoupe(L) {
   const GH = 70;
   const X = (p) => gx + (p / 0.6) * GW;
   const Y = (f) => gy + GH - (f / 0.8) * GH;
-  s += `<rect x="${gx - 8}" y="${gy - 16}" width="${GW + 16}" height="${GH + 40}" rx="5" fill="rgba(250,251,248,.95)" stroke="${C.line}"/>`;
+  s += `<rect x="${gx - 8}" y="${gy - 16}" width="${GW + 16}" height="${GH + 40}" rx="10" fill="rgba(252,250,245,.95)" stroke="${C.line}"/>`;
   s += T(gx, gy - 4, 'FORCE AT THE PLUNGER (N) · TRAVEL (MM)', `font-size="7.2" font-weight="700" fill="${C.ink}" letter-spacing="1"`);
   let pp = '';
   for (let i = 0; i <= 60; i++) {
@@ -180,7 +181,7 @@ function drawLoupe(L) {
   s += `<path d="${pp}" fill="none" stroke="${C.ink}" stroke-width="1.3"/><path d="${rr}" fill="none" stroke="${C.alt}" stroke-width="1.3"/>`;
   const fNow = L.dir < 0 && L.c ? FORCE.release(L.p) : FORCE.press(L.p);
   s += `<circle cx="${f1(X(L.p))}" cy="${f1(Y(fNow))}" r="4" fill="${C.acc}" stroke="#fff" stroke-width="1.5"/>`;
-  s += T(X(SWITCH.pt) + 4, Y(SWITCH.of) - 4, `OF ${SWITCH.of} N`, `font-size="6.8" font-weight="700" fill="${C.acc}"`);
+  s += T(X(SWITCH.pt) + 4, Y(SWITCH.of) - 4, `OF ${SWITCH.of} N`, `font-size="6.8" font-weight="700" fill="${C.accInk}"`);
   s += T(X(rp) - 4, Y(SWITCH.rf) + 12, `RF ${SWITCH.rf} N`, `font-size="6.8" font-weight="700" fill="${C.alt}" text-anchor="end"`);
   s += T(gx, gy + GH + 14, 'PRESS ─ BLACK · RELEASE ─ BLUE · SHAPE SCHEMATIC, OF / RF FROM OMRON', `font-size="6.4" font-weight="600" fill="${C.mute}" letter-spacing=".6"`);
   return s + '</g>';
@@ -215,16 +216,16 @@ export function createConsole(app) {
   // ------------------------------------------------------------ header
   group('head');
   add(`<div style="position:absolute;left:0;top:0;width:160px;height:89px;background:${C.dark}"></div>`);
-  add(`<svg style="position:absolute;left:24px;top:24px" width="40" height="40" viewBox="0 0 40 40"><path d="M20 3 C29 3 35 10 35 20 C35 31 28 37 20 37 C12 37 5 31 5 20 C5 10 11 3 20 3 Z" fill="none" stroke="${C.lime}" stroke-width="2.2"/><path d="M13 14 C17 11 23 11 27 14 M11 22 C16 19 24 19 29 22 M14 30 C18 28 22 28 26 30 M20 6 V34" fill="none" stroke="${C.lime}" stroke-width="1.6"/></svg>`);
+  add(`<svg style="position:absolute;left:24px;top:24px" width="40" height="40" viewBox="0 0 40 40"><path d="M20 3 C29 3 35 10 35 20 C35 31 28 37 20 37 C12 37 5 31 5 20 C5 10 11 3 20 3 Z" fill="none" stroke="${C.acc}" stroke-width="2.2"/><path d="M13 14 C17 11 23 11 27 14 M11 22 C16 19 24 19 29 22 M14 30 C18 28 22 28 26 30 M20 6 V34" fill="none" stroke="${C.acc}" stroke-width="1.6"/></svg>`);
   add(`<div class="mo" style="position:absolute;left:76px;top:33px;color:#fff;font-size:17px;font-weight:700;letter-spacing:3px">M1</div>`);
-  add(`<div class="mo" style="position:absolute;left:76px;top:54px;color:${C.lime};font-size:9px;font-weight:600;letter-spacing:3px">PRO</div>`);
+  add(`<div class="mo" style="position:absolute;left:76px;top:54px;color:${C.acc};font-size:9px;font-weight:600;letter-spacing:3px">PRO</div>`);
   add(`<div class="sm" style="position:absolute;left:182px;top:22px;letter-spacing:2.4px">WIRELESS GAMING MOUSE</div>`);
-  add(`<div style="position:absolute;left:181px;top:37px;font-size:33px;font-weight:700;letter-spacing:-.6px;line-height:1">GravaStar Mercury M1 Pro <span style="color:${C.acc};font-weight:400">/</span></div>`);
+  add(`<div style="position:absolute;left:181px;top:37px;font:500 35px var(--serif);letter-spacing:-.6px;line-height:1">GravaStar Mercury M1 Pro <span style="color:${C.acc};font-weight:400">/</span></div>`);
   add(`<div class="mo" style="position:absolute;left:182px;top:77px;font-size:11.2px;letter-spacing:2.2px;color:#5e656a">GUNMETAL GRAY / TEARDOWN · SENSOR TO REPORT</div>`);
-  add(`<div class="sm" style="position:absolute;left:1046px;top:49px;letter-spacing:2.6px;font-size:9.6px">MAGNESIUM SKELETON · PAW3395 · nRF52833</div>`);
-  add(`<div style="position:absolute;left:1386px;top:34px;color:${C.acc};font-size:39px;font-weight:700;letter-spacing:-.8px;line-height:1">88<span style="font-size:20px">G</span></div>`);
-  add(`<div style="position:absolute;left:1488px;top:33px;width:1px;height:44px;background:${C.faint}"></div>`);
-  add(`<div class="sm" style="position:absolute;left:1504px;top:34px;line-height:14px;letter-spacing:2.2px">124 ×<br>64.5 ×<br>39.5 MM</div>`);
+  add(`<div class="sm xtra" style="position:absolute;left:1046px;top:49px;letter-spacing:2.6px;font-size:9.6px">MAGNESIUM SKELETON · PAW3395 · nRF52833</div>`);
+  add(`<div class="xtra" style="position:absolute;left:1386px;top:34px;color:${C.accInk};font:500 42px var(--serif);letter-spacing:-.6px;line-height:1">88<span style="font-size:20px">G</span></div>`);
+  add(`<div class="xtra" style="position:absolute;left:1488px;top:33px;width:1px;height:44px;background:${C.faint}"></div>`);
+  add(`<div class="sm xtra" style="position:absolute;left:1504px;top:34px;line-height:14px;letter-spacing:2.2px">124 ×<br>64.5 ×<br>39.5 MM</div>`);
 
   // ------------------------------------------------------------ 01 mouse state
   panel(28, 126, 282, 214, 'MOUSE STATE', '01');
@@ -357,11 +358,11 @@ export function createConsole(app) {
   // ------------------------------------------------------------ footer, floor notes
   group('foot');
   add(`<div class="sm" style="position:absolute;left:27px;top:882px;letter-spacing:2.2px">SOURCES: GRAVASTAR · PIXART · OMRON · FCC ID 2ASXF-M1 &nbsp;·&nbsp; TRACED ±1.5 MM &nbsp;·&nbsp; ASSUMED VALUES MARKED</div>`);
-  add(`<div class="sm" style="position:absolute;right:28px;top:882px;letter-spacing:2.2px">ONE INPUT: SECONDS INTO THE GESTURE <span style="color:${C.acc}">//////</span></div>`);
-  const notes = add(`<div style="position:absolute;inset:0"></div>`);
+  add(`<div class="sm xtra" style="position:absolute;right:28px;top:882px;letter-spacing:2.2px">ONE INPUT: SECONDS INTO THE GESTURE <span style="color:${C.acc}">//////</span></div>`);
+  const notes = add(`<div class="xtra" style="position:absolute;inset:0"></div>`);
   notes.innerHTML = `<svg style="position:absolute;left:398px;top:162px" width="90" height="80"><path d="M0 80V0h80" fill="none" stroke="${C.acc}" stroke-width="1" stroke-dasharray="3 3" opacity=".55"/></svg>
     <svg style="position:absolute;left:1188px;top:640px" width="80" height="80"><path d="M80 0v76H0" fill="none" stroke="${C.acc}" stroke-width="1" stroke-dasharray="3 3" opacity=".55"/></svg>`;
-  const viewNote = add(`<div class="sm" style="position:absolute;right:${1600 - 1262}px;top:688px;line-height:15px;letter-spacing:2px;text-align:right"></div>`);
+  const viewNote = add(`<div class="sm xtra" style="position:absolute;right:${1600 - 1262}px;top:688px;line-height:15px;letter-spacing:2px;text-align:right"></div>`);
   host = ui;
 
   // ------------------------------------------------------------ the feature number, the lift dimension, the cards
@@ -369,19 +370,19 @@ export function createConsole(app) {
   const dimSvg = add(`<svg style="position:absolute;inset:0;overflow:visible" width="1600" height="900"></svg>`);
   const titleCard = add(`<div class="card" style="left:118px;top:318px">
     <div class="mo" style="font-size:12px;font-weight:700;letter-spacing:4px;color:${C.lime}">GRAVASTAR · WIRELESS GAMING MOUSE</div>
-    <div style="margin-top:16px;font:700 84px Inter,system-ui,sans-serif;letter-spacing:-2.6px;line-height:.95;color:#f3f5f1">Mercury<br>M1 Pro</div>
+    <div style="margin-top:16px;font:500 88px var(--serif);letter-spacing:-2px;line-height:.98;color:#f6f2e9">Mercury<br>M1 Pro</div>
     <div style="margin-top:22px;width:44px;height:3px;background:${C.lime}"></div>
     <div class="mo" style="margin-top:16px;font-size:11.5px;letter-spacing:2.6px;color:#9aa2a6">GUNMETAL GRAY · MAGNESIUM SKELETON · 88 G</div>
     <div class="mo" style="margin-top:7px;font-size:11.5px;letter-spacing:2.6px;color:#6f777b">A TEARDOWN, FROM THE SENSOR TO THE REPORT</div></div>`);
   const endCard = add(`<div class="card" style="left:96px;top:196px;background:${C.panel};border:1px solid ${C.line};border-radius:8px;box-shadow:0 4px 22px rgba(30,40,30,.14);padding:38px 46px 34px">
-    <div class="mo" style="font-size:11.5px;font-weight:700;letter-spacing:4px;color:${C.acc}">GRAVASTAR · GUNMETAL GRAY</div>
-    <div style="margin-top:14px;font:700 76px Inter,system-ui,sans-serif;letter-spacing:-2.4px;line-height:.95;color:${C.ink}">Mercury<br>M1 Pro</div>
+    <div class="mo" style="font-size:11.5px;font-weight:700;letter-spacing:4px;color:${C.accInk}">GRAVASTAR · GUNMETAL GRAY</div>
+    <div style="margin-top:14px;font:500 80px var(--serif);letter-spacing:-1.8px;line-height:.98;color:${C.ink}">Mercury<br>M1 Pro</div>
     <div style="margin-top:40px;display:flex;gap:40px">${[
       ['88', 'G', 'MAGNESIUM SKELETON'],
       ['26,000', 'DPI', 'PAW3395 · 650 IPS · 50 G'],
       ['4', 'KHZ', 'WITH THE 4K RECEIVER'],
     ]
-      .map(([v, u, c]) => `<div><div style="font:700 40px Inter,system-ui,sans-serif;letter-spacing:-1px;color:${C.ink}">${v}<span style="font-size:17px;color:${C.acc};margin-left:5px">${u}</span></div><div class="sm" style="margin-top:8px;font-size:8.6px">${c}</div></div>`)
+      .map(([v, u, c]) => `<div><div style="font:500 44px var(--serif);letter-spacing:-.6px;color:${C.ink}">${v}<span style="font-size:18px;color:${C.accInk};margin-left:5px">${u}</span></div><div class="sm" style="margin-top:8px;font-size:8.6px">${c}</div></div>`)
       .join('')}</div>
     <div class="sm" style="margin-top:46px;font-size:8.4px;letter-spacing:2px;line-height:16px">SOURCES: GRAVASTAR · PIXART · OMRON · FCC ID 2ASXF-M1<br>EVERY NUMBER FROM ONE MODEL · ASSUMED VALUES MARKED</div></div>`);
 
@@ -547,21 +548,19 @@ export function createConsole(app) {
       callG.innerHTML = ch;
       pointer(s.cursor);
 
-      // the console builds in panel by panel; panels the shot is not about step back
+      // a lean frame drops the optional captions (the film); the live page keeps them when you drive it
+      ui.classList.toggle('lean', !!s.lean);
+      // the console builds in panel by panel; panels the shot is not about leave
       const rv = s.reveal ?? 1;
       const lag = 0.055;
       BUILD.forEach((id, i) => {
         const k = smooth((rv * (1 + lag * (BUILD.length - 1)) - lag * i) * 1.0);
         const f = s.focus?.[id] ?? 1;
         const g = groups[id];
-        g.style.opacity = k.toFixed(3);
-        g.style.transform = k < 0.999 ? `translateY(${((1 - k) * 14).toFixed(1)}px)` : '';
-        g.style.visibility = k < 0.003 ? 'hidden' : 'visible';
-        // stepping back fades what is on the card, not the card itself
-        if (g.dataset.f !== f.toFixed(2)) {
-          g.dataset.f = f.toFixed(2);
-          for (const c of g.children) if (!c.classList.contains('cp')) c.style.opacity = f.toFixed(2);
-        }
+        const o = k * f;
+        g.style.opacity = o.toFixed(3);
+        g.style.transform = o < 0.999 ? `translateY(${((1 - o) * 14).toFixed(1)}px)` : '';
+        g.style.visibility = o < 0.003 ? 'hidden' : 'visible';
       });
       for (const [n, k] of [[titleCard, s.title ?? 0], [endCard, s.endcard ?? 0]]) {
         n.style.opacity = k.toFixed(3);

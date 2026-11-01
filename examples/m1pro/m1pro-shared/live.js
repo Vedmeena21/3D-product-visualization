@@ -25,18 +25,18 @@ const SPEED = [0.05, 2];
 const speedK = (v) => (v - SPEED[0]) / (SPEED[1] - SPEED[0]);
 
 const CSS = `
-html,body{background:#e9ebe6;overflow:hidden}
+html,body{background:#efece3;overflow:hidden}
 #app{position:absolute!important;inset:auto!important;left:0;top:0;width:${W}px;height:${H}px;transform-origin:0 0}
 #gl{touch-action:none;cursor:grab}
 #gl.drag{cursor:grabbing}
 .bt{pointer-events:auto;cursor:pointer}
 .bt:hover{filter:brightness(.96)}
 .hit{position:absolute;pointer-events:auto;cursor:ew-resize}
-.tourchip{position:absolute;left:800px;top:104px;transform:translateX(-50%);display:flex;align-items:center;gap:7px;height:22px;padding:0 11px;border:1px solid #e2e5df;border-radius:4px;background:rgba(250,251,248,.95);color:#1f2326;font:700 9px 'JetBrains Mono',monospace;letter-spacing:1.3px;white-space:nowrap;cursor:pointer;pointer-events:auto}
-.tourchip i{display:block;width:6px;height:6px;border-radius:50%;background:#4b8410}
+.tourchip{position:absolute;left:800px;top:104px;transform:translateX(-50%);display:flex;align-items:center;gap:7px;height:22px;padding:0 11px;border:1px solid #e7e2d6;border-radius:4px;background:rgba(252,250,245,.95);color:#1f2326;font:700 9px 'JetBrains Mono',monospace;letter-spacing:1.3px;white-space:nowrap;cursor:pointer;pointer-events:auto}
+.tourchip i{display:block;width:6px;height:6px;border-radius:50%;background:#d97757}
 .tourchip.on i{animation:blink 1.2s steps(2) infinite}
 @keyframes blink{50%{opacity:.15}}
-.turn{position:fixed;left:0;right:0;bottom:18px;text-align:center;font:600 12px/1.4 'JetBrains Mono',monospace;letter-spacing:1px;color:#899095;text-transform:uppercase;display:none}
+.turn{position:fixed;left:0;right:0;bottom:18px;text-align:center;font:600 12px/1.4 'JetBrains Mono',monospace;letter-spacing:1px;color:#8b857b;text-transform:uppercase;display:none}
 @media (orientation:portrait) and (max-width:820px){.turn{display:block}}
 `;
 
@@ -340,7 +340,7 @@ export function runLive() {
     for (const key in fx) fx[key] += (want[key] - fx[key]) * (f ? Math.max(fk, 0.5) : fk);
     st.frame(sceneState(m, {link, xray: eased('xray'), explode, section: section > 0.5, travelX: cam.travelX, studio: fx.studio, envRot: fx.envRot, gate: fx.gate}), {...cam, az: cam.az * D2R, el: cam.el * D2R});
     const display = Object.fromEntries(DISPLAY.map((x) => [x, disp[x].on]));
-    frameConsole({m, seq, tau, link, dpi, lod: 1, view, display, explode, section: section > 0.5, labels: eased('labels', 0.5) * ss(1.1, 1.7, since), cursor, paused: AP.on ? false : paused, speed, speedK: speedK(speed), reveal: fx.reveal, title: fx.title, endcard: fx.endcard, loupe: fx.loupe, big: f ? f.big : null, focus: f ? f.focus : null});
+    frameConsole({m, seq, tau, link, dpi, lod: 1, view, display, explode, section: section > 0.5, labels: eased('labels', 0.5) * ss(1.1, 1.7, since), cursor, paused: AP.on ? false : paused, speed, speedK: speedK(speed), reveal: fx.reveal, lean: !!f, title: fx.title, endcard: fx.endcard, loupe: fx.loupe, big: f ? f.big : null, focus: f ? f.focus : null});
     if (tourChip.classList.contains('on') !== AP.on || !tourChip.firstChild) {
       tourChip.classList.toggle('on', AP.on);
       tourChip.innerHTML = AP.on ? '<i></i>AUTO TOUR · CLICK TO TAKE OVER' : '▶ RESUME TOUR';

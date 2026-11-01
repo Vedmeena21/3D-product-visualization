@@ -8,12 +8,12 @@ runSim({duration: 6, fps: 60}, async ({canvas, capture}) => {
   renderer.setSize(1600, 900, false);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#e9ebe6');
+  scene.background = new THREE.Color('#efece3');
   const sun = new THREE.DirectionalLight('#ffffff', 3);
   sun.position.set(3, 5, 4);
   scene.add(sun, new THREE.AmbientLight('#ffffff', 0.7));
 
-  const cube = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), new THREE.MeshStandardMaterial({color: '#4b8410', roughness: 0.4}));
+  const cube = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), new THREE.MeshStandardMaterial({color: '#d97757', roughness: 0.4}));
   scene.add(cube);
   const camera = new THREE.PerspectiveCamera(35, 16 / 9, 0.1, 50);
   camera.position.set(0, 1.5, 8);
