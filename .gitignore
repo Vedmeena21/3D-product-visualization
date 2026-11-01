@@ -4,3 +4,8 @@ __pycache__/
 *.pyc
 .venv/
 .DS_Store
+.env
+*.log
+*.wav
+*.mp4
+!media/*.mp4
