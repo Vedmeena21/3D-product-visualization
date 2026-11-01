@@ -1,0 +1,14 @@
+{
+  "name": "3d-product-visualization",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An interactive 3D teardown of a gaming mouse, with a 60 fps film and procedural score, and the steps to make one for any product.",
+  "license": "MIT",
+  "scripts": {
+    "setup": "cd engine && npm install && npx playwright install chromium",
+    "build": "node engine/sims/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-film",
+    "timeline": "node examples/m1pro/tools/timeline.mjs",
+    "score": "python3 engine/run_sfx.py examples/m1pro/m1pro-shared/score.py",
+    "film": "node engine/sims/capture.mjs m1pro-film --size 1600x900 --dpr 1.2 --out teardown-out/m1pro-silent.mp4"
+  }
+}
