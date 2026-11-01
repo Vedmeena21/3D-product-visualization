@@ -2,7 +2,7 @@
 // Renders a built video page frame by frame.
 //   node engine/capture.mjs m1pro-video --size 1600x900 --dpr 1.2 --out out/video.mp4
 //   node engine/capture.mjs m1pro-video --at 1.5,22,36.9 --out-dir out/stills       (PNG stills, for review)
-// Options: --fps N  --from S --to S (a slice)  --config '{"quality":{...}}' or a path to a JSON file
+// Options: --headed (a visible browser window: the most reliable way onto the GPU)  --fps N  --from S --to S (a slice)  --config '{"quality":{...}}' or a path to a JSON file
 import {spawn} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -31,7 +31,7 @@ const cfg = JSON.parse(cfgArg.trim().startsWith('{') ? cfgArg : fs.readFileSync(
 const stills = flag('at', null)?.split(',').map(Number);
 
 const {chromium} = need('playwright');
-const browser = await chromium.launch({args: BROWSER_ARGS});
+const browser = await chromium.launch({args: BROWSER_ARGS, headless: !argv.includes('--headed')});
 const page = await (await browser.newContext({viewport: {width: W, height: H}, deviceScaleFactor: dpr})).newPage();
 page.on('pageerror', (e) => console.error('page error:', e.message));
 await page.addInitScript((c) => (window.__CFG = c), cfg);

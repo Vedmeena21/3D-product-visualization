@@ -16,10 +16,14 @@ export const RIG_DIR = path.join(ENGINE, 'web');
 
 export const need = (id) => createRequire(path.join(MODULES, 'x.js'))(id);
 
-// GPU WebGL by default; on Windows ask ANGLE for D3D11 so a discrete GPU wins over the integrated one.
+// GPU WebGL by default. macOS gets Metal through ANGLE, Windows gets D3D11 (so a discrete GPU wins over the integrated
+// one). SwiftShader stays allowed as a fallback, so a machine with no usable GPU still renders, just slowly.
 export const BROWSER_ARGS = [
+  ...(process.platform === 'darwin' ? ['--use-angle=metal'] : []),
   ...(process.platform === 'win32' ? ['--use-angle=d3d11'] : []),
+  '--enable-webgl',
   '--ignore-gpu-blocklist',
   '--enable-gpu-rasterization',
+  '--enable-unsafe-swiftshader',
   '--hide-scrollbars',
 ];
