@@ -2,12 +2,12 @@
 
 # 3D Product Visualization
 
-**A Claude Code skill that turns any product into an interactive 3D explainer and a 60 fps launch film.**
+**A Claude Code skill that turns any product into an interactive 3D teardown and a cinematic launch film.**
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-2ea44f)
 ![Node 20+](https://img.shields.io/badge/node-20%2B-3c873a)
 ![three.js](https://img.shields.io/badge/three.js-0.186-black)
-![60 fps film](https://img.shields.io/badge/film-1080p%C2%B760-blue)
+![Cinematic output](https://img.shields.io/badge/output-1080p%20%C2%B7%2060%20fps%20%C2%B7%20%E2%88%9214%20LUFS-blue)
 ![Made with Claude Code](https://img.shields.io/badge/made%20with-Claude%20Code-d97757)
 
 [Watch the film](media/m1pro-film.mp4) · [Get started](#get-started) · [Use it with Claude](#use-it-with-claude) · [How it works](docs/how-it-works.md)
@@ -21,9 +21,16 @@ Tell Claude what to take apart. It models the product in 3D, pulls it into layer
 ## What you get
 
 - **A live page.** One HTML file under 1 MB, no server. It tours itself until you touch it, then hands over control.
-- **A launch-style film.** The same scene rendered frame by frame at 1080p60, with speed ramps, camera cuts and callouts.
-- **A generated score.** Every click, flick and cut is timed from the film itself and mastered to −14 LUFS.
+- **A cinematic launch film.** Speed-ramped slow motion, beat-matched camera cuts, numbered callouts and live cutaways, rendered one exact frame at a time instead of screen-recorded.
+- **A generated score.** Every click, flick and cut is timed from the film itself; the mix is mastered to broadcast-style loudness.
 - **Honest numbers.** Each value on screen is real, or marked as assumed.
+
+| | Output |
+|---|---|
+| Live page | single offline `.html`, under 1 MB, three.js and fonts inlined |
+| Film | 1920×1080 · 60 fps · H.264 + AAC stereo, deterministic frame-by-frame render |
+| Score | procedural, −14 LUFS integrated, peaks under −2 dBFS |
+| Timing | one `render(t)` drives all three, so picture and sound never drift |
 
 The worked example is a gaming mouse, the GravaStar Mercury M1 Pro: a 4K-report flick, exploded layers, a sensor cutaway, and the switch closing at 0.30 mm in 20× slow motion.
 
