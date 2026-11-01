@@ -68,6 +68,6 @@ Details and rules of thumb: [docs/make-your-own.md](docs/make-your-own.md). How 
 └── NOTICE.md  LICENSE
 ```
 
-## Credits and licence
+## Licence
 
-MIT. The example, docs and structure are original to this repo; `engine/` builds on the MIT-licensed [teardown](https://github.com/elvarofficial/teardown) kit and [claude-motion](https://github.com/whaleyxbt/claude-motion), and keeps their notice (see [NOTICE.md](NOTICE.md)). The M1 Pro example is an unofficial fan study, not affiliated with GravaStar.
+[MIT](LICENSE). The M1 Pro example is an unofficial study, not affiliated with GravaStar.
