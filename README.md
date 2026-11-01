@@ -1,6 +1,8 @@
 # 3D Product Visualization
 
-Turn a real product into an interactive 3D explainer page and a 60 fps launch-style film, with a generated score, from one codebase.
+**A Claude Code skill that turns any product into an interactive 3D explainer and a 60 fps launch film.**
+
+Ask Claude to take something apart. It builds the product in 3D, explodes it layer by layer, cuts it open, slows down the one moment that matters, and scores the whole thing, as one offline page you can drive and a film you can post.
 
 ![Example film preview](media/preview.gif)
 
@@ -52,6 +54,15 @@ PLAYWRIGHT_BROWSERS_PATH=0 node --import ./examples/m1pro/tools/swgl.mjs engine/
 ```
 
 ## Make one for your own product
+
+With Claude Code: open this folder and ask in plain words.
+
+> Build me a 3D teardown of the Sony WH-1000XM5 headphones and render a 30-second film.
+
+> Make an exploded-view page for my keyboard, with a slow-motion key press.
+
+Claude reads `SKILL.md` and follows the steps below. Or do it by hand:
+
 
 1. Copy `examples/m1pro/` to `examples/<product>/` and rename the folders.
 2. Model the parts in real millimetres, grouped by layer.
