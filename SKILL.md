@@ -1,6 +1,6 @@
 ---
 name: product-viz
-description: Build an interactive 3D explainer page and a 60 fps launch-style video (with a generated score) for a real product. Use when the user wants a product taken apart in 3D, an exploded view, a cutaway, a product teardown film, or a 3D demo page of a physical product.
+description: Build an interactive 3D explainer page and a 60 fps launch-style video (with a generated score) for a real product. Use when the user wants a product taken apart in 3D, an exploded view, a cutaway, a product teardown video, or a 3D demo page of a physical product.
 ---
 
 # 3D product visualization
