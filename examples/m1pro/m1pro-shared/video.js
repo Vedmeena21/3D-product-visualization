@@ -15,7 +15,7 @@ const BAR = (4 * 60) / 92;
 const B = (n) => Math.round(n * BAR * 100) / 100;
 // the left click, slowed through the press and the release: [tau, rate], linear in between
 const CLICK_WARP = [[0, 1], [0.33, 1], [0.38, 0.05], [0.46, 0.05], [0.5, 0.5], [0.56, 0.5], [0.59, 0.06], [0.64, 0.06], [0.7, 1], [2.4, 1]];
-const F = ['01', '02', '10'];
+const F = ['02'];
 export const SCRIPT = [
   // 1 · the hook: a flick on the 4K link at 3200 DPI, apart layer by layer, back together, an orbit and a flick
   {t: 0, seq: 'flick', view: 'hero', link: 'k4', dpi: 3200, set: {studio: 1, reveal: 1, title: 0, endcard: 0, gate: 1, sweep: 1, loupe: 0}, dur: 0.001, focus: F},
@@ -42,23 +42,23 @@ export const SCRIPT = [
   {t: B(8) - 0.4, set: {studio: 1}, dur: 1.6},
   {t: B(8), set: {reveal: 1}, dur: 1.8},
   // 3 · hero flick
-  {t: B(8.5), seq: 'flick', view: 'hero', focus: F},
+  {t: B(8.5), seq: 'flick', view: 'hero', focus: ['01']},
   {t: B(8.5) + 0.5, big: ['0.94', 'G', 'PEAK ACCELERATION · 100 MM FLICK IN 0.25 S · 29.5 IPS']},
   // 4 · the sensor, cut down the centreline
-  {t: B(10), view: 'sensor', big: null},
+  {t: B(10), view: 'sensor', big: null, focus: ['01']},
   {t: B(10) + 0.6, display: 'section'},
   {t: B(10) + 1.2, seq: 'flick', rate: 0.5},
   {t: B(10) + 1.8, display: 'labels', big: ['1', 'MM', 'LIFT-OFF DISTANCE · ABOVE IT THE SENSOR STOPS COUNTING']},
   {t: B(13) - 0.9, display: 'labels', big: null},
   {t: B(13) - 0.6, display: 'section'},
   // 5 · the left switch, x-rayed, the click slowed through the press and the release
-  {t: B(13), view: 'switch', focus: ['03', '10']},
+  {t: B(13), view: 'switch', focus: []},
   {t: B(13) + 0.4, display: 'xray'},
   {t: B(13) + 0.8, set: {loupe: 1}, dur: 0.7, display: 'labels', big: ['0.30', 'MM', 'PRE-TRAVEL TO CONTACT · OMRON D2FC (CATALOGUE ±0.2)']},
   {t: B(13) + 1.2, seq: 'click', warp: CLICK_WARP},
   {t: B(16) - 0.7, set: {loupe: 0}, dur: 0.6, display: 'labels', big: null},
   // 6 · the wheel
-  {t: B(16), view: 'wheel', focus: ['03', '10']},
+  {t: B(16), view: 'wheel', focus: ['03']},
   {t: B(16) + 0.5, seq: 'scroll', rate: 0.8, big: ['15°', '', 'PER DETENT · 24 DETENTS / REV (ASSUMED)']},
   {t: B(18) - 0.6, display: 'xray', big: null},
   // 7 · the underside, the link and the DPI
@@ -157,11 +157,11 @@ export const bigAt = (t) => {
   const k = ss(ks[i].t, ks[i].t + 0.45, t) * (next ? 1 - ss(next.t - 0.35, next.t, t) : 1);
   return {v: ks[i].big[0], unit: ks[i].big[1], cap: ks[i].big[2], k};
 };
-/** each panel's opacity: the panels the shot is about stay, the rest step back */
+/** each panel's opacity: the panels the shot is about stay, the rest leave the frame */
 export const focusAt = (t) => {
   const ks = SCRIPT.filter((e) => 'focus' in e);
   const i = ks.findLastIndex((e) => e.t <= t);
-  const lvl = (f, id) => (!f ? 1 : f.includes(id) ? 1 : 0.34);
+  const lvl = (f, id) => (!f ? 1 : f.includes(id) ? 1 : 0);
   const k = ss(ks[i].t, ks[i].t + 0.6, t);
   return Object.fromEntries(PANELS.map((id) => [id, i > 0 ? lvl(ks[i - 1].focus, id) + (lvl(ks[i].focus, id) - lvl(ks[i - 1].focus, id)) * k : lvl(ks[i].focus, id)]));
 };
@@ -410,6 +410,7 @@ export function makeConsoleFrame(ui, st) {
       callouts: labels(keys ?? [], s.labels, {left: loupe > 0.05, maxY: s.big?.k > 0.05 ? 560 : 700}),
       cursor: s.cursor,
       reveal: s.reveal ?? 1,
+      lean: s.lean ?? false,
       focus: s.focus,
       title: s.title ?? 0,
       endcard: s.endcard ?? 0,
@@ -474,7 +475,7 @@ export function makeVideo() {
         const m = stateAt(f.seq, f.tau, {dpi: f.dpi, link: f.link, lod: 1});
         st.frame(sceneState(m, {link: f.link, xray: f.xray, explode: f.explode, section: f.section, travelX: cam.travelX, studio: f.studio, envRot: f.envRot, gate: f.gate}), {...cam, az: cam.az * D2R, el: cam.el * D2R});
         const cursor = f.reveal > 0.6 ? cursorAt(t) : {x: -99, y: -99, press: false, ring: 0, ringX: 0, ringY: 0};
-        frame({m, seq: f.seq, tau: f.tau, link: f.link, dpi: f.dpi, lod: 1, view: f.view, display: f.disp, explode: f.explode, section: f.section, labels: f.labels * ss(1.1, 1.7, f.since), cursor, speed: f.rate, speedK: (f.rate - 0.05) / 1.95, reveal: f.reveal, focus: f.focus, title: f.title, endcard: f.endcard, big: f.big, loupe: f.loupe});
+        frame({m, seq: f.seq, tau: f.tau, link: f.link, dpi: f.dpi, lod: 1, view: f.view, display: f.disp, explode: f.explode, section: f.section, labels: f.labels * ss(1.1, 1.7, f.since), cursor, speed: f.rate, speedK: (f.rate - 0.05) / 1.95, reveal: f.reveal, lean: true, focus: f.focus, title: f.title, endcard: f.endcard, big: f.big, loupe: f.loupe});
         return {};
       },
     };
