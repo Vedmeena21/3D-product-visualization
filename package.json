@@ -4,6 +4,27 @@
   "private": true,
   "description": "Turn a real product into an interactive 3D explainer page and a 60 fps video with a procedural score. Worked example: a gaming mouse.",
   "license": "MIT",
+  "author": "Vedmeena21 (https://github.com/Vedmeena21)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vedmeena21/3D-product-visualization.git"
+  },
+  "homepage": "https://github.com/Vedmeena21/3D-product-visualization#readme",
+  "bugs": {
+    "url": "https://github.com/Vedmeena21/3D-product-visualization/issues"
+  },
+  "keywords": [
+    "3d",
+    "three.js",
+    "product-visualization",
+    "exploded-view",
+    "video",
+    "claude-code",
+    "skill"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "setup": "cd engine && npm install && npx playwright install chromium",
     "build": "node engine/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-video",
