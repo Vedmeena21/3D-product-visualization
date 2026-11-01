@@ -114,7 +114,7 @@ You need Node.js 20+ and `ffmpeg`. Python 3 is only needed for the sound.
    node engine/capture.mjs m1pro-video --at 5,22,36.9 --out-dir out/stills
    ```
 
-No graphics card? The video still renders, at about a second a frame, with this in place of `npm run video`:
+On a Mac with Apple silicon the video takes about 20 minutes, in a visible browser window you should leave alone. No graphics card? It still renders, at about a second a frame, with this in place of `npm run video`:
 
 ```bash
 PLAYWRIGHT_BROWSERS_PATH=0 node --import ./examples/m1pro/tools/swgl.mjs engine/capture.mjs m1pro-video --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4
@@ -184,6 +184,7 @@ More: [docs/make-your-own.md](docs/make-your-own.md).
 
 - **Page is blank or the capture says "missing .html".** Run `npm run build` first.
 - **The video plays without sound.** Some editor previews can't play AAC audio. Open it in QuickTime, VLC or a browser.
+- **"Error creating WebGL context".** Headless Chromium can't reach the GPU on some Macs. `npm run video` already opens a visible window (`--headed`), which does. For other captures add `--headed` yourself.
 - **Rendering takes forever.** There's no GPU in reach, so it's using software rendering: about a second a frame. Check a few moments with `--at`, or render a slice with `--from 20 --to 30`.
 - **Chromium isn't found.** Run `npm run setup` again, or set `PLAYWRIGHT_BROWSERS_PATH=0` so it uses the copy inside the project.
 - **The score step fails.** It needs Python 3 with numpy, and `ffmpeg` on your PATH.

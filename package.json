@@ -30,6 +30,6 @@
     "build": "node engine/build.mjs examples/m1pro/m1pro-live examples/m1pro/m1pro-video",
     "timeline": "node examples/m1pro/tools/timeline.mjs",
     "score": "python3 engine/audio/run.py examples/m1pro/m1pro-shared/score.py",
-    "video": "node engine/capture.mjs m1pro-video --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4"
+    "video": "node engine/capture.mjs m1pro-video --headed --size 1600x900 --dpr 1.2 --out out/m1pro-silent.mp4"
   }
 }
